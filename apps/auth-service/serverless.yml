@@ -1,0 +1,19 @@
+service: auth-service
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.10
+  region: "eu-north-1"
+
+functions:
+  hello:
+    handler: src/handlers/hello.handler
+    events:
+      - http:
+          path: hello
+          method: get
+
+plugins:
+  - serverless-python-requirements
