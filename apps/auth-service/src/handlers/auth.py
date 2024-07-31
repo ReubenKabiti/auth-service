@@ -21,5 +21,9 @@ def handler(event, context):
             print("req denied!")
             res = generate_policy("user", "Deny", event["methodArn"])
             return json.loads(res)
+        else:
+            res = generate_policy("user", "Deny", event["methodArn"])
+            return json.loads(res)
     except BaseException:
-        return "unauthorized"
+        res = generate_policy("user", "Deny", event["methodArn"])
+        return json.loads(res)
