@@ -1,4 +1,33 @@
 import json
+
+users = [
+        {
+            "id": 0,
+            "username": "alice",
+        },
+        {
+            "id": 1,
+            "username": "bob",
+        },
+        {
+            "id": 2,
+            "username": "eve",
+        },
+        {
+            "id": 3,
+            "username": "dave",
+        },
+        {
+            "id": 4,
+            "username": "steve",
+        },
+    ]
+
+def find_user_with_id(users, id):
+    for user in users:
+        if user["id"] == id:
+            return user
+
 def generate_policy(principal_id, effect, resource):
     res = { "principalId": principal_id }
     if (effect and resource):
@@ -13,17 +42,10 @@ def generate_policy(principal_id, effect, resource):
 def handler(event, context):
     token = event["authorizationToken"]
     try:
-        if token == "Allow":
-            print("req allowed!")
-            res = generate_policy("user", "Allow", event["methodArn"])
-            return json.loads(res)
-        elif token == "Deny":
-            print("req denied!")
-            res = generate_policy("user", "Deny", event["methodArn"])
-            return json.loads(res)
-        else:
-            res = generate_policy("user", "Deny", event["methodArn"])
-            return json.loads(res)
-    except BaseException:
-        res = generate_policy("user", "Deny", event["methodArn"])
-        return json.loads(res)
+        id = int(token)
+        user = find_user_with_id(users, id)
+        if user is None:
+           return json.loads(generate_policy("user", "Deny", event["methodArn"]))
+        return json.loads(generate_policy("user", "Allow", event["methodArn"]))
+    except:
+       return json.loads(generate_policy("user", "Deny", event["methodArn"]))
