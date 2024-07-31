@@ -12,12 +12,14 @@ def generate_policy(principal_id, effect, resource):
 
 def handler(event, context):
     token = event["authorizationToken"]
-    res = {}
-    if token == "Allow":
-        res = generate_policy("user", "Allow", event["methodArn"])
-    elif token == "deny":
-        res = generate_policy("user", "Deny", event["methodArn"])
     try:
-        json.loads(res)
+        if token == "Allow":
+            print("req allowed!")
+            res = generate_policy("user", "Allow", event["methodArn"])
+            return json.loads(res)
+        elif token == "Deny":
+            print("req denied!")
+            res = generate_policy("user", "Deny", event["methodArn"])
+            return json.loads(res)
     except BaseException:
         return "unauthorized"

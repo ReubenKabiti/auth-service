@@ -8,15 +8,18 @@ provider:
   region: "eu-north-1"
 
 functions:
+  auth:
+    handler: src/handlers/auth.handler
+    cors: true
+
   hello:
     handler: src/handlers/hello.handler
     events:
       - http:
           path: hello
           method: get
-  auth:
-    handler: src/handlers/auth.handler
-    cors: true
+          authorizer: auth
+          cors: true
 
 plugins:
   - serverless-python-requirements
