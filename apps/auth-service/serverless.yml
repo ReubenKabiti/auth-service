@@ -12,17 +12,19 @@ functions:
     handler: src/handlers/auth.handler
     cors: true
 
-  hello:
-    handler: src/handlers/hello.handler
+  view_store:
+    handler: src/handlers/view_store.handler
     events:
       - http:
-          path: hello
+          path: /store/{id}/
           method: get
-          authorizer: auth
+          # authorizer: auth
           cors: true
+
 
 plugins:
   - serverless-python-requirements
+
 
 resources:
   Resources:
