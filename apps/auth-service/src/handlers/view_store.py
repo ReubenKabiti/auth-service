@@ -11,10 +11,10 @@ def handler(event, context):
     if store is None:
         return {
                 "statusCode": 404,
-                "body": {"message": f"Could not find store with id {store_id}"}
+                "body": json.dumps({"message": f"Could not find store with id {store_id}"}),
             }
 
     return {
             "statusCode": 200,
-            "body": {"store": store}
+            "body": json.dumps({"store": store}),
         }
