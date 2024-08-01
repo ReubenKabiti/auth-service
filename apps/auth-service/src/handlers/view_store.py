@@ -1,6 +1,6 @@
 import json
-from lib.stores import stores
-from lib.utils import find_by_id
+from .lib.stores import stores
+from .lib.utils import find_by_id
 
 def handler(event, context):
     path_params = event.get("pathParameters", {})
