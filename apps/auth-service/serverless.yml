@@ -6,6 +6,29 @@ provider:
   name: aws
   runtime: python3.10
   region: "eu-north-1"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: ${self:custom.UsersTable.Arn}
+
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: ${self:custom.StoresTable.Arn}
+
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: ${self:custom.ProductsTable.Arn}
+
+
+# layers:
+#   depsLayer:
+#     path: python
+#     name: ${sls:stage}-depsLayer
+#     compatibleRuntimes:
+#       - python3.10
 
 functions:
   auth:
@@ -18,9 +41,26 @@ functions:
       - http:
           path: /store/{id}/
           method: get
-          # authorizer: auth
+          authorizer: auth
           cors: true
 
+  signup:
+    handler: src/handlers/signup.handler
+    events:
+      - http:
+          path: /signup
+          method: post
+          cors: true
+    # layers: 
+    #   - arn: arn:aws:lambda:eu-north-1:218356233728:layer:deps-layer
+
+  login:
+    handler: src/handlers/login.handler
+    events:
+      - http:
+          path: /login
+          method: post
+          cors: true
 
 plugins:
   - serverless-python-requirements
@@ -48,3 +88,60 @@ resources:
         RestApiId:
           Ref: 'ApiGatewayRestApi'
         StatusCode: '401'
+          
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: UsersTable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+
+          - AttributeName: email
+            AttributeType: S
+
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+
+        GlobalSecondaryIndexes:
+          - IndexName: emailIndex
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+
+
+    StoresTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: StoresTable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+
+    ProductsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ProductsTable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+
+custom:
+  UsersTable:
+    Arn: !GetAtt UsersTable.Arn
+  StoresTable:
+    Arn: !GetAtt StoresTable.Arn
+  ProductsTable:
+    Arn: !GetAtt ProductsTable.Arn

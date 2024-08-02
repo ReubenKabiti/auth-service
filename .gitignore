@@ -3,6 +3,8 @@ node_modules/
 __pycache__/
 *.py[cod]
 *$py.class
+python/
+*.layer.zip
 
 # C extensions
 *.so
@@ -99,5 +101,5 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # Serverless Python requirements plugin
-requirements.txt
+# requirements.txt
 .pip
