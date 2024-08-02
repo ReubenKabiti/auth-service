@@ -10,7 +10,7 @@ def handler(event, context):
         user = event["requestContext"]["authorizer"]
         user_id = user["id"]
 
-        body = json.loads(event.body)
+        body = json.loads(event.get("body"))
         store_name = body["store_name"]
 
         item = {
