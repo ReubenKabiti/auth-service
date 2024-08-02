@@ -56,6 +56,60 @@ functions:
           method: post
           cors: true
 
+  delete_user:
+    handler: src/handlers/delete_user.handler
+    events:
+      - http:
+          path: /user/{id}/delete
+          method: delete
+          cors: true
+          authorizer: auth
+
+  create_store:
+    handler: src/handlers/create_store.handler
+    events:
+      - http:
+          path: /store
+          method: post
+          cors: true
+          authorizer: auth
+
+  delete_store:
+    handler: src/handlers/delete_store.handler
+    events:
+      - http:
+          path: /store/{id}/delete
+          method: delete
+          cors: true
+          authorizer: auth
+
+  add_product:
+    handler: src/handlers/add_product.handler
+    events:
+      - http:
+          path: /store/{id}/product
+          method: post
+          cors: true
+          authorizer: auth
+
+  remove_product:
+    handler: src/handlers/remove_product.handler
+    events:
+      - http:
+          path: /store/{id}/product/remove
+          method: delete
+          cors: true
+          authorizer: auth
+
+  view_product:
+    handler: src/handlers/view_product.handler
+    events:
+      - http:
+          path: /store/{id}/product/{id}/
+          method: get
+          cors: true
+          authorizer: auth
+
 plugins:
   - serverless-python-requirements
 
