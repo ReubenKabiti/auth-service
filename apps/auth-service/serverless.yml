@@ -31,14 +31,6 @@ functions:
     handler: src/handlers/auth.handler
     cors: true
 
-  view_store:
-    handler: src/handlers/view_store.handler
-    events:
-      - http:
-          path: /store/{id}/
-          method: get
-          authorizer: auth
-          cors: true
 
   signup:
     handler: src/handlers/signup.handler
@@ -83,8 +75,8 @@ functions:
           cors: true
           authorizer: auth
 
-  add_product:
-    handler: src/handlers/add_product.handler
+  create_product:
+    handler: src/handlers/create_product.handler
     events:
       - http:
           path: /store/{id}/product
@@ -92,8 +84,8 @@ functions:
           cors: true
           authorizer: auth
 
-  remove_product:
-    handler: src/handlers/remove_product.handler
+  delete_product:
+    handler: src/handlers/delete_product.handler
     events:
       - http:
           path: /store/{id}/product/remove
@@ -101,14 +93,60 @@ functions:
           cors: true
           authorizer: auth
 
-  view_product:
-    handler: src/handlers/view_product.handler
+  get_product:
+    handler: src/handlers/get_product.handler
     events:
       - http:
           path: /store/{id}/product/{id}/
           method: get
           cors: true
           authorizer: auth
+
+  get_products:
+    handler: src/handlers/get_products.handler
+    events:
+      - http:
+          path: /store/{id}/products
+          method: get
+          cors: true
+          authorizer: auth
+
+  get_stores:
+    handler: src/handlers/get_stores.handler
+    events:
+      - http:
+          path: /stores
+          method: get
+          cors: true
+          authorizer: auth
+
+  get_stores_owned_by_user:
+    handler: src/handlers/get_stores_owned_by_user.handler
+    events:
+      - http:
+          path: /user/{id}/stores
+          method: get
+          cors: true
+          authorizer: auth
+
+  get_store:
+    handler: src/handlers/get_store.handler
+    events:
+      - http:
+          path: /store/{id}/
+          method: get
+          authorizer: auth
+          cors: true
+
+  rate_owner:
+    handler: src/handlers/rate_owner.handler
+    events:
+      - http:
+          path: /rate/user/{id}
+          method: get
+          authorizer: auth
+          cors: true
+
 
 plugins:
   - serverless-python-requirements

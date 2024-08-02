@@ -16,6 +16,7 @@ def generate_policy(principal_id, effect, resource, context=None):
     return res_json
 
 def is_token_valid(token):
+    print(f"token is {token}")
     try:
         claims = jwt.decode(token, "author")
         return claims
