@@ -1,0 +1,4 @@
+boto3
+uuid==1.30
+pyjwt
+bcrypt
