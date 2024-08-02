@@ -3,7 +3,6 @@ from .cedar_text import schema, policies
 import boto3
 import jwt
 
-
 def generate_policy(principal_id, effect, resource):
     res = { "principalId": principal_id }
     if (effect and resource):
