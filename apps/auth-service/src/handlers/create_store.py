@@ -14,7 +14,7 @@ def handler(event, context):
         item = {
             "id": str(uuid()),
             "store_name": store_name,
-            "owner": user_id,
+            "user_id": user_id,
         }
         table.put_item(Item=item)
         return return_json({"store_id": item["id"]}, 201)

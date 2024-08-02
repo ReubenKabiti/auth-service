@@ -79,25 +79,25 @@ functions:
     handler: src/handlers/create_product.handler
     events:
       - http:
-          path: /store/{id}/product
+          path: /product
           method: post
           cors: true
           authorizer: auth
 
-  delete_product:
-    handler: src/handlers/delete_product.handler
-    events:
-      - http:
-          path: /store/{id}/product/remove
-          method: delete
-          cors: true
-          authorizer: auth
+  # delete_product:
+  #   handler: src/handlers/delete_product.handler
+  #   events:
+  #     - http:
+  #         path: /store/{id}/product/remove
+  #         method: delete
+  #         cors: true
+  #         authorizer: auth
 
   get_product:
     handler: src/handlers/get_product.handler
     events:
       - http:
-          path: /store/{id}/product/{id}/
+          path: /product/{id}
           method: get
           cors: true
           authorizer: auth
@@ -220,9 +220,22 @@ resources:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
+
+          - AttributeName: store_id
+            AttributeType: S
+
         KeySchema:
           - AttributeName: id
             KeyType: HASH
+
+        GlobalSecondaryIndexes:
+          - IndexName: storeId
+            KeySchema:
+              - AttributeName: store_id
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+
 
 custom:
   UsersTable:
