@@ -133,14 +133,16 @@ functions:
           authorizer: auth
           cors: true
 
-  rate_owner:
-    handler: src/handlers/rate_owner.handler
-    events:
-      - http:
-          path: /rate/user/{id}
-          method: get
-          authorizer: auth
-          cors: true
+  # for later
+  # rate_owner:
+  #   handler: src/handlers/rate_owner.handler
+  #   events:
+  #     - http:
+  #         path: /rate/user/{id}
+  #         method: post
+  #         authorizer: auth
+  #         cors: true
+
 
 
 plugins:
