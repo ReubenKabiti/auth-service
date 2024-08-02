@@ -18,12 +18,16 @@ provider:
     - Effect: Allow
       Action:
         - dynamodb:*
-      Resource: ${self:custom.StoresTable.Arn}
+      Resource: 
+        - ${self:custom.StoresTable.Arn}
+        - !Join ['/', ['${self:custom.StoresTable.Arn}', 'index', 'userId']]
 
     - Effect: Allow
       Action:
         - dynamodb:*
-      Resource: ${self:custom.ProductsTable.Arn}
+      Resource: 
+        - ${self:custom.ProductsTable.Arn}
+        - !Join ['/', ['${self:custom.ProductsTable.Arn}', 'index', 'storeId']]
 
 
 functions:
@@ -107,15 +111,6 @@ functions:
     events:
       - http:
           path: /store/{id}/products
-          method: get
-          cors: true
-          authorizer: auth
-
-  get_stores:
-    handler: src/handlers/get_stores.handler
-    events:
-      - http:
-          path: /stores
           method: get
           cors: true
           authorizer: auth
@@ -211,6 +206,14 @@ resources:
         KeySchema:
           - AttributeName: id
             KeyType: HASH
+
+        GlobalSecondaryIndexes:
+          - IndexName: userId
+            KeySchema:
+              - AttributeName: user_id
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
 
     ProductsTable:
       Type: AWS::DynamoDB::Table
