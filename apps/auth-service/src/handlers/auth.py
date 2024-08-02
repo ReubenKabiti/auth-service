@@ -1,6 +1,7 @@
 import json
 from .cedar_text import schema, policies
-from .utils import find_by_id
+import boto3
+import jwt
 
 
 def generate_policy(principal_id, effect, resource):
@@ -14,11 +15,18 @@ def generate_policy(principal_id, effect, resource):
     res_json = json.dumps(res)
     return res_json
 
+def is_token_valid(token):
+    try:
+        claims = jwt.decode(token, "author")
+        return claims
+    except:
+        return False
+
 def handler(event, context):
     token = event["authorizationToken"]
     try:
-        id = int(token)
-        user = find_by_id(users, id)
+        if user := is_token_valid(token) != False:
+            user = find_by_id(users, id)
         if user is None:
            return json.loads(generate_policy("user", "Deny", event["methodArn"]))
         return json.loads(generate_policy("user", "Allow", event["methodArn"]))

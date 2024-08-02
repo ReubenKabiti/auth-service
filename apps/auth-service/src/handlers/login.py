@@ -6,8 +6,6 @@ from passlib.hash import pbkdf2_sha256
 db = boto3.resource("dynamodb")
 table = db.Table("UsersTable")
 
-SECRET = "4687180f-fa3c-43af-9ae8-a7d90016b4ce" # just a placeholder
-
 def handler(event, context):
     body = json.loads(event.get("body"))
     email = body.get("email")
@@ -33,7 +31,7 @@ def handler(event, context):
         }
 
     claims = { "id": user.get("id"), "username": user["username"], "email": email }
-    token = jwt.encode(claims, SECRET)
+    token = jwt.encode(claims, "author")
     return {
             "statusCode": 200,
             "body": json.dumps({"token": token})

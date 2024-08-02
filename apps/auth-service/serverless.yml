@@ -26,13 +26,6 @@ provider:
       Resource: ${self:custom.ProductsTable.Arn}
 
 
-# layers:
-#   depsLayer:
-#     path: python
-#     name: ${sls:stage}-depsLayer
-#     compatibleRuntimes:
-#       - python3.10
-
 functions:
   auth:
     handler: src/handlers/auth.handler
@@ -54,8 +47,6 @@ functions:
           path: /signup
           method: post
           cors: true
-    # layers: 
-    #   - arn: arn:aws:lambda:eu-north-1:218356233728:layer:deps-layer
 
   login:
     handler: src/handlers/login.handler
