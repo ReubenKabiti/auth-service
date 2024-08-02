@@ -1,7 +1,7 @@
 import jwt
 import boto3
-import bcrypt
 import json
+from passlib.hash import pbkdf2_sha256
 
 db = boto3.resource("dynamodb")
 table = db.Table("UsersTable")
@@ -9,7 +9,7 @@ table = db.Table("UsersTable")
 SECRET = "4687180f-fa3c-43af-9ae8-a7d90016b4ce" # just a placeholder
 
 def handler(event, context):
-    body = event.get("body")
+    body = json.loads(event.get("body"))
     email = body.get("email")
     password = body.get("password")
 
@@ -26,7 +26,7 @@ def handler(event, context):
 
     user = res.get("Items")[0]
 
-    if not bcrypt.checkpw(password, user["password"]):
+    if not pbkdf2_sha256.verify(password, user["password"]):
         return {
             "statusCode": 404,
             "body": json.dumps({"message": "Incorrect username or password"}),

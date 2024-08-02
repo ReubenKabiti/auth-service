@@ -10,7 +10,10 @@ provider:
     - Effect: Allow
       Action:
         - dynamodb:*
-      Resource: ${self:custom.UsersTable.Arn}
+        - dynamodb:QueryItem
+      Resource: 
+        - ${self:custom.UsersTable.Arn}
+        - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', 'emailIndex']]
 
     - Effect: Allow
       Action:
