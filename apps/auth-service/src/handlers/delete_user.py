@@ -1,24 +1,13 @@
 import boto3
 import json
-
-db = boto3.resource("dynamodb")
-table = db.Table("UsersTable")
+from .lib.util.delete_item_from_db import delete_item_from_db
+from .lib.util.returns import return_json
 
 def handler(event, context):
     body = json.loads(event.get("body"))
     id = body.get("id")
-
     try:
-        table.delete_item(Key={
-            "id": id
-        })
-
-        return {
-            "statusCode": 202,
-            body: json.dumps({}),
-        }
+        delete_item_from_db("UsersTable", id)
+        return return_json(status_code=202)
     except:
-        return {
-            "statusCode": 404,
-            body: json.dumps({"message": "id provided does not belong to any user"}),
-        }
+        return return_json({"message": "id provided does not belong to any user"}, 404)
