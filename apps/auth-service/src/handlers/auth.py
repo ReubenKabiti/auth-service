@@ -25,9 +25,7 @@ def is_token_valid(token):
 def handler(event, context):
     token = event["authorizationToken"]
     try:
-        if user := is_token_valid(token) != False:
-            user = find_by_id(users, id)
-        if user is None:
+        if user := is_token_valid(token) == False:
            return json.loads(generate_policy("user", "Deny", event["methodArn"]))
         return json.loads(generate_policy("user", "Allow", event["methodArn"]))
     except:
