@@ -76,7 +76,7 @@ def generate_cedar_entities(event, user):
     _, resource = match_request(event)
     print(f"matched resource {resource}")
 
-    if resource == "store":
+    if resource == "/store":
         if method == "POST":
             p = {
                 "uid": {
