@@ -14,14 +14,15 @@ def handler(event, context):
 
     item = {
         "id": str(uuid()),
+        "store_id": store_id,
         "name": product_name,
         "price": product_price,
         "quantity": product_quantity,
-        "store_id": store_id
     }
 
     try:
         table.put_item(Item=item)
         return return_json(item, 201)
-    except:
+    except Exception as e:
+        print(e)
         return return_json({"message": "could not create product"}, 400)
