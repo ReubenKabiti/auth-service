@@ -15,18 +15,12 @@ def generate_policy(principal_id, effect, resource, context=None):
     res_json = json.dumps(res)
     return res_json
 
-def is_token_valid(token):
-    print(f"token is {token}")
-    try:
-        claims = jwt.decode(token, "author")
-        return claims
-    except:
-        return False
-
 def handler(event, context):
     token = event["authorizationToken"]
     try:
-        if user := is_token_valid(token) == False:
+        user = jwt.decode(token, "author", algorithms=["HS256"])
+        print(f"decoded user: {user}")
+        if user is None:
            return json.loads(generate_policy("user", "Deny", event["methodArn"]))
         return json.loads(generate_policy(user["id"], "Allow", event["methodArn"], context=user))
     except:

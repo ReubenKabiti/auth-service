@@ -10,7 +10,6 @@ provider:
     - Effect: Allow
       Action:
         - dynamodb:*
-        - dynamodb:QueryItem
       Resource: 
         - ${self:custom.UsersTable.Arn}
         - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', 'emailIndex']]
@@ -128,10 +127,10 @@ functions:
     handler: src/handlers/get_store.handler
     events:
       - http:
-          path: /store/{id}/
+          path: /store/{id}
           method: get
-          authorizer: auth
           cors: true
+          authorizer: auth
 
   # for later
   # rate_owner:

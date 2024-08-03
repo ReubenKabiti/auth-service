@@ -13,4 +13,4 @@ def handler(event, context):
     if not "Items" in res:
         return return_json({"message": "user doesn't exist"}, 404)
     items = res["Items"]
-    return return_json({"items": items}, 200)
+    return return_json({"stores": items}, 200)
