@@ -42,7 +42,7 @@ def generate_cedar_policies(event):
         principal,
         action == Action::"POST",
         resource == Api::"/store"
-    ) unless { principal == resource.owner };
+    ) when { principal == resource.owner };
 
     """
     return policies
@@ -99,6 +99,8 @@ def generate_cedar_entities(event, user):
                     }}
                 }
             }
+            entities.push_back(p)
+            entities.push_back(r)
     return entities
 
 def generate_cedar_request(event, user):
