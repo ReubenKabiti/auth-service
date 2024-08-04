@@ -1,13 +1,10 @@
-import boto3
 from .lib.util.returns import return_json
-table = boto3.resource("dynamodb").Table("StoresTable")
+from .lib.store import read_store
 
 def handler(event, context):
     store_id = event["pathParameters"]["id"]
     try:
-        response = table.get_item(Key={"id": store_id})
-        store = response.get("Item")
-        print(f"found store {store}")
+        store = read_store(store_id)
         if store is None:
             return return_json({}, 404)
         return return_json(store, 200)
