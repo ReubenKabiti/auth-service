@@ -13,6 +13,9 @@ importers:
       serverless:
         specifier: ^3.38.0
         version: 3.39.0
+      serverless-api-gateway-caching:
+        specifier: ^1.10.4
+        version: 1.10.4
       serverless-python-requirements:
         specifier: ^6.1.0
         version: 6.1.0(serverless@3.39.0)
@@ -3517,6 +3520,10 @@ packages:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
     dev: false
 
+  /lodash.isempty@4.4.0:
+    resolution: {integrity: sha512-oKMuF3xEeqDltrGMfDxAPGIVMSSRv8tbRSODbrs4KGsRRLEhrW8N8Rd4DRgB2+621hY8A8XwwrTVhXWpxFvMzg==}
+    dev: false
+
   /lodash.isplainobject@4.0.6:
     resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
     dev: false
@@ -4232,6 +4239,13 @@ packages:
     resolution: {integrity: sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==}
     engines: {node: '>=10'}
     hasBin: true
+    dev: false
+
+  /serverless-api-gateway-caching@1.10.4:
+    resolution: {integrity: sha512-yXCQEsFR57DaRxYGrkY73IxJBFyt1Vubdwhb0dzfmAAcsas51VuvT+kOTs2yeUDb4L+50vDy05BXKNdSYBcLkg==}
+    dependencies:
+      lodash.get: 4.4.2
+      lodash.isempty: 4.4.0
     dev: false
 
   /serverless-python-requirements@6.1.0(serverless@3.39.0):

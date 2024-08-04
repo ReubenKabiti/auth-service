@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "serverless": "^3.38.0",
+    "serverless-api-gateway-caching": "^1.10.4",
     "serverless-python-requirements": "^6.1.0"
   }
 }

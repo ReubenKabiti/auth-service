@@ -1,6 +1,7 @@
 import json
 from .lib.util.delete_item_from_db import delete_item_from_db
 from .lib.util.returns import return_json
+from .delete_product import delete_product
 
 def handler(event, context):
     id = event["pathParameters"]["id"]

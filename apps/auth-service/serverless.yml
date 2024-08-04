@@ -154,6 +154,7 @@ functions:
 
 plugins:
   - serverless-python-requirements
+  - serverless-api-gateway-caching
 
 
 resources:
@@ -258,3 +259,5 @@ custom:
     Arn: !GetAtt StoresTable.Arn
   ProductsTable:
     Arn: !GetAtt ProductsTable.Arn
+  apiGatewayCaching:
+    enabled: false

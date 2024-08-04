@@ -15,7 +15,7 @@ def handler(event, context):
         store_name = update_fields["store_name"]
         update_expressions.append("set #store_name = :store_name")
         expression_attribute_values[":store_name"] = store_name
-        expression_attribute_names[":store_name"] = "store_name"
+        expression_attribute_names["#store_name"] = "store_name"
 
     update_expression = ",".join(update_expressions)
     try:
@@ -26,8 +26,7 @@ def handler(event, context):
             ExpressionAttributeNames=expression_attribute_names,
         )
 
-        item = response["Item"]
-        return return_json({"store": item}, 200)
+        return return_json({"store": response}, 200)
     except Exception as e:
         print(e)
         return return_json(status_code=400)
