@@ -8,6 +8,6 @@ def handler(event, context):
         product = table.get_item(Key={"id": id})
         if product is None:
             return return_json({"message": "product not found"}, 404)
-        return return_json({"product": product}, 200)
+        return return_json({"product": product["Item"]}, 200)
     except:
         return return_json({"message": "product not found"}, 404)

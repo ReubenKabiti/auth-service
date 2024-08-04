@@ -18,8 +18,9 @@ def handler(event, context):
         "id": str(uuid()),
         "username": username,
         "email": email,
-        "password": hashed_pw
+        "password": hashed_pw,
+        "rating": []
     }
 
     table.put_item(Item=item)
-    return return_json({}, 201)
+    return return_json({"id": item["id"]}, 201)

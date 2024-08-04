@@ -12,4 +12,5 @@ def handler(event, context):
     if not "Items" in res:
         return return_json({"message": "store doesn't exist"}, 404)
     items = res["Items"]
-    return return_json({"items": items}, 200)
+    print(items)
+    return return_json({"products": items}, 200)

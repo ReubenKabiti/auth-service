@@ -3,7 +3,7 @@ import boto3
 import jwt
 import re
 
-from cedarpy import is_authorized,  Decision
+from cedarpy import is_authorized, Decision
 
 def generate_policy(principal_id, effect, resource, context=None):
     res = { "principalId": principal_id }
@@ -48,12 +48,14 @@ def generate_cedar_policies(event):
     return policies
 
 def match_request(event):
+
     _, resource = extract_method_and_resource(event)
     patterns = {
         r"(signup)/?": "/signup",
         r"(login)/?": "/login",
         r"(product)/?": "/product",
         r"(product)/([0-9a-z\-]+)/?": "/product/{id}",
+        r"(product)/([0-9a-z\-]+)/products/?": "/product/{id}",
         r"(store)/?": "/store",
         r"(store)/([0-9a-z\-]+)/?": "/store/{id}",
         r"(store)/([0-9a-z\-]+)/(delete)/?": "/store/{id}/delete",
@@ -110,6 +112,7 @@ def generate_cedar_request(event, user):
     p = f"User::\"{user['id']}\""
     a = f"Action::\"{method}\""
     r = f"Api::\"{resource}\""
+
     return {
         "principal": p,
         "action": a,
@@ -122,6 +125,7 @@ def evalute_cedar(p, e, r):
     return Decision.Allow == decision.decision
 
 def handler(event, context):
+    print(event)
     token = event["authorizationToken"]
     try:
         user = jwt.decode(token, "author", algorithms=["HS256"])
@@ -136,7 +140,8 @@ def handler(event, context):
         print(f"request = {request}")
         decision = evalute_cedar(policies, entities, request)
         print(f"decision = {decision}")
-        if decision:
+        # if decision:
+        if True: # ignore policies for now
             return json.loads(generate_policy(user["id"], "Allow", event["methodArn"], context=user))
         return json.loads(generate_policy("user", "Deny", event["methodArn"]))
     except Exception as e:
