@@ -5,7 +5,7 @@ from .lib.util.returns import return_json
 table = boto3.resource("dynamodb").Table("StoresTable")
 
 def handler(event, context):
-    update_fields = json.loads(event.body)["update_fields"]
+    update_fields = json.loads(event["body"])["update_fields"]
     store_id = event["pathParameters"]["id"]
     update_expressions = []
     expression_attribute_values = {}
