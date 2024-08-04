@@ -132,6 +132,15 @@ functions:
           cors: true
           authorizer: auth
 
+  update_store:
+    handler: src/handlers/update_store.handler
+    events:
+      - http:
+          path: /store/{id}
+          method: put
+          cors: true
+          authorizer: auth
+
   rate_owner:
     handler: src/handlers/rate_owner.handler
     events:
