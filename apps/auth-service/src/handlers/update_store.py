@@ -26,7 +26,7 @@ def handler(event, context):
             ExpressionAttributeNames=expression_attribute_names,
         )
 
-        return return_json({"store": response}, 200)
+        return return_json({}, 200)
     except Exception as e:
         print(e)
         return return_json(status_code=400)
