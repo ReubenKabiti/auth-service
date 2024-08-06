@@ -28,6 +28,18 @@ provider:
         - ${self:custom.ProductsTable.Arn}
         - !Join ['/', ['${self:custom.ProductsTable.Arn}', 'index', 'storeId']]
 
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: 
+        - ${self:custom.PoliciesTable.Arn}
+        - !Join ['/', ['${self:custom.PoliciesTable.Arn}', 'index', 'userId']]
+
+  environment:
+    UsersTableName: ${self:custom.UsersTable.Name}
+    StoresTableName: ${self:custom.StoresTable.Name}
+    ProductsTableName: ${self:custom.ProductsTable.Name}
+
 
 functions:
   auth:
@@ -251,13 +263,39 @@ resources:
             Projection:
               ProjectionType: ALL
 
+    PoliciesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: PoliciesTable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: user_id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: userId
+            KeySchema:
+              - AttributeName: user_id
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
 
 custom:
   UsersTable:
     Arn: !GetAtt UsersTable.Arn
+    Name: !Ref UsersTable
   StoresTable:
     Arn: !GetAtt StoresTable.Arn
+    Name: !Ref StoresTable
   ProductsTable:
     Arn: !GetAtt ProductsTable.Arn
+    Name: !Ref ProductsTable
+  PoliciesTable:
+    Arn: !GetAtt PoliciesTable.Arn
+    Name: !Ref PoliciesTable
   apiGatewayCaching:
     enabled: false

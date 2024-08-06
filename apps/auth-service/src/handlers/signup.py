@@ -4,8 +4,7 @@ from passlib.hash import pbkdf2_sha256
 import json
 from .lib.util.returns import return_json
 
-db = boto3.resource("dynamodb")
-table = db.Table("UsersTable")
+table = boto3.resource("dynamodb").Table("UsersTable")
 
 def handler(event, context):
     body = json.loads(event.get("body"))
@@ -19,8 +18,10 @@ def handler(event, context):
         "username": username,
         "email": email,
         "password": hashed_pw,
-        "rating": []
+        "rating": [],
+        "role": "User",
     }
 
     table.put_item(Item=item)
+
     return return_json({"id": item["id"]}, 201)
