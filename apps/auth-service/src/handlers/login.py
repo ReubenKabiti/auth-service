@@ -2,7 +2,6 @@ import jwt
 import boto3
 import json
 from passlib.hash import pbkdf2_sha256
-from .lib.util.returns import return_json
 import datetime
 
 db = boto3.resource("dynamodb")
@@ -13,7 +12,7 @@ def handler(event, context):
     email = body.get("email")
     password = body.get("password")
 
-    error_msg = "Incorrect username or password"
+    error_msg = "Incorrect email or password"
 
     res = table.query(
         IndexName="emailIndex",
@@ -32,4 +31,9 @@ def handler(event, context):
 
     claims = { "id": user.get("id"), "username": user.get("username"), "email": email, "exp": exp}
     token = jwt.encode(claims, "author")
-    return return_json({"token": token}, 200)
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps({"token": token}),
+    }
+
