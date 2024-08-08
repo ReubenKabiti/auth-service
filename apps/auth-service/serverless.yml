@@ -14,27 +14,6 @@ provider:
         - ${self:custom.UsersTable.Arn}
         - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', 'emailIndex']]
 
-    - Effect: Allow
-      Action:
-        - dynamodb:*
-      Resource: 
-        - ${self:custom.StoresTable.Arn}
-        - !Join ['/', ['${self:custom.StoresTable.Arn}', 'index', 'userId']]
-
-    - Effect: Allow
-      Action:
-        - dynamodb:*
-      Resource: 
-        - ${self:custom.ProductsTable.Arn}
-        - !Join ['/', ['${self:custom.ProductsTable.Arn}', 'index', 'storeId']]
-
-    - Effect: Allow
-      Action:
-        - dynamodb:*
-      Resource: 
-        - ${self:custom.PoliciesTable.Arn}
-        - !Join ['/', ['${self:custom.PoliciesTable.Arn}', 'index', 'userId']]
-
   environment:
     UsersTableName: ${self:custom.UsersTable.Name}
     StoresTableName: ${self:custom.StoresTable.Name}
@@ -71,97 +50,6 @@ functions:
           method: delete
           cors: true
           authorizer: auth
-
-  create_store:
-    handler: src/handlers/create_store.handler
-    events:
-      - http:
-          path: /store
-          method: post
-          cors: true
-          authorizer: auth
-
-  delete_store:
-    handler: src/handlers/delete_store.handler
-    events:
-      - http:
-          path: /store/{id}/delete
-          method: delete
-          cors: true
-          authorizer: auth
-
-  create_product:
-    handler: src/handlers/create_product.handler
-    events:
-      - http:
-          path: /product
-          method: post
-          cors: true
-          authorizer: auth
-
-  # delete_product:
-  #   handler: src/handlers/delete_product.handler
-  #   events:
-  #     - http:
-  #         path: /store/{id}/product/remove
-  #         method: delete
-  #         cors: true
-  #         authorizer: auth
-
-  get_product:
-    handler: src/handlers/get_product.handler
-    events:
-      - http:
-          path: /product/{id}
-          method: get
-          cors: true
-          authorizer: auth
-
-  get_products:
-    handler: src/handlers/get_products.handler
-    events:
-      - http:
-          path: /store/{id}/products
-          method: get
-          cors: true
-          authorizer: auth
-
-  get_stores_owned_by_user:
-    handler: src/handlers/get_stores_owned_by_user.handler
-    events:
-      - http:
-          path: /user/{id}/stores
-          method: get
-          cors: true
-          authorizer: auth
-
-  get_store:
-    handler: src/handlers/get_store.handler
-    events:
-      - http:
-          path: /store/{id}
-          method: get
-          cors: true
-          authorizer: auth
-
-  update_store:
-    handler: src/handlers/update_store.handler
-    events:
-      - http:
-          path: /store/{id}
-          method: put
-          cors: true
-          authorizer: auth
-
-  rate_owner:
-    handler: src/handlers/rate_owner.handler
-    events:
-      - http:
-          path: /user/{id}/rate
-          method: put
-          authorizer: auth
-          cors: true
-
 
 
 plugins:
@@ -216,86 +104,9 @@ resources:
             Projection:
               ProjectionType: ALL
 
-
-    StoresTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: StoresTable
-        BillingMode: PAY_PER_REQUEST
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-          - AttributeName: user_id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-
-        GlobalSecondaryIndexes:
-          - IndexName: userId
-            KeySchema:
-              - AttributeName: user_id
-                KeyType: HASH
-            Projection:
-              ProjectionType: ALL
-
-    ProductsTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ProductsTable
-        BillingMode: PAY_PER_REQUEST
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-
-          - AttributeName: store_id
-            AttributeType: S
-
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-
-        GlobalSecondaryIndexes:
-          - IndexName: storeId
-            KeySchema:
-              - AttributeName: store_id
-                KeyType: HASH
-            Projection:
-              ProjectionType: ALL
-
-    PoliciesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: PoliciesTable
-        BillingMode: PAY_PER_REQUEST
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-          - AttributeName: user_id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        GlobalSecondaryIndexes:
-          - IndexName: userId
-            KeySchema:
-              - AttributeName: user_id
-                KeyType: HASH
-            Projection:
-              ProjectionType: ALL
-
 custom:
   UsersTable:
     Arn: !GetAtt UsersTable.Arn
     Name: !Ref UsersTable
-  StoresTable:
-    Arn: !GetAtt StoresTable.Arn
-    Name: !Ref StoresTable
-  ProductsTable:
-    Arn: !GetAtt ProductsTable.Arn
-    Name: !Ref ProductsTable
-  PoliciesTable:
-    Arn: !GetAtt PoliciesTable.Arn
-    Name: !Ref PoliciesTable
   apiGatewayCaching:
     enabled: false
