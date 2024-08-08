@@ -20,12 +20,18 @@ def handler(event, context):
     )
 
     if not "Items" in res:
-        return return_json({"message": error_msg}, 404)
+        return {
+            "statusCode": 400,
+            "body": json.dumps({"message":  error_msg}),
+        }
 
     user = res.get("Items")[0]
 
     if not pbkdf2_sha256.verify(password, user["password"]):
-        return return_json({"message": error_msg}, 404)
+        return {
+            "statusCode": 400,
+            "body": json.dumps({"message":  error_msg}),
+        }
 
     exp = datetime.datetime.now() + datetime.timedelta(3600*24*3) # jwt token expires after 3 days
 
