@@ -11,9 +11,6 @@ provider:
 
   environment:
     UsersTableName: ${self:custom.UsersTable.Name}
-    StoresTableName: ${self:custom.StoresTable.Name}
-    ProductsTableName: ${self:custom.ProductsTable.Name}
-
 
 functions:
   auth:
