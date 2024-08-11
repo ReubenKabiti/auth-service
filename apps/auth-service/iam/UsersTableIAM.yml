@@ -5,5 +5,5 @@ UsersTableIAM:
   Resource: 
     - ${self:custom.UsersTable.Arn}
     - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', 'emailIndex']]
-    - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', 'usernameIndex']]
-    - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', 'fullnameIndex']]
+    # - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', 'usernameIndex']]
+    # - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', 'fullnameIndex']]

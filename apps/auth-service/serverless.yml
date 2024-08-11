@@ -8,6 +8,7 @@ provider:
   region: "eu-north-1"
   iamRoleStatements:
     - ${file(iam/UsersTableIAM.yml):UsersTableIAM}
+    - ${file(iam/RolesTableIAM.yml):RolesTableIAM}
 
   environment:
     UsersTableName: ${self:custom.UsersTable.Name}

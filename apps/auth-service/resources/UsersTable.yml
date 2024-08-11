@@ -28,16 +28,16 @@ UsersTable:
         Projection:
           ProjectionType: ALL
 
-      - IndexName: usernameIndex
-        KeySchema:
-          - AttributeName: username
-            KeyType: HASH
-        Projection:
-          ProjectionType: ALL
+      # - IndexName: usernameIndex
+      #   KeySchema:
+      #     - AttributeName: username
+      #       KeyType: HASH
+      #   Projection:
+      #     ProjectionType: ALL
 
-      - IndexName: fullnameIndex
-        KeySchema:
-          - AttributeName: fullname
-            KeyType: HASH
+      # - IndexName: fullnameIndex
+      #   KeySchema:
+      #     - AttributeName: fullname
+      #       KeyType: HASH
         Projection:
           ProjectionType: ALL
