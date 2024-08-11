@@ -7,14 +7,7 @@ provider:
   runtime: python3.10
   region: "eu-north-1"
   iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:*
-      Resource: 
-        - ${self:custom.UsersTable.Arn}
-        - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', 'emailIndex']]
-        - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', 'usernameIndex']]
-        - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', 'fullnameIndex']]
+    - ${file(iam/UsersTableIAM.yml):UsersTableIAM}
 
   environment:
     UsersTableName: ${self:custom.UsersTable.Name}
@@ -82,49 +75,7 @@ resources:
           Ref: 'ApiGatewayRestApi'
         StatusCode: '401'
           
-    UsersTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: UsersTable
-        BillingMode: PAY_PER_REQUEST
-        AttributeDefinitions:
-          - AttributeName: user_id
-            AttributeType: S
-
-          - AttributeName: username
-            AttributeType: S
-
-          - AttributeName: email
-            AttributeType: S
-
-          - AttributeName: fullname
-            AttributeType: S
-
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-
-        GlobalSecondaryIndexes:
-          - IndexName: emailIndex
-            KeySchema:
-              - AttributeName: email
-                KeyType: HASH
-            Projection:
-              ProjectionType: ALL
-
-          - IndexName: usernameIndex
-            KeySchema:
-              - AttributeName: username
-                KeyType: HASH
-            Projection:
-              ProjectionType: ALL
-
-          - IndexName: fullnameIndex
-            KeySchema:
-              - AttributeName: fullname
-                KeyType: HASH
-            Projection:
-              ProjectionType: ALL
+    UsersTable: ${file(resources/UsersTable.yml):UsersTable}
 
 custom:
   UsersTable:

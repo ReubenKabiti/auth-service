@@ -1,0 +1,43 @@
+UsersTable:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: UsersTable
+    BillingMode: PAY_PER_REQUEST
+    AttributeDefinitions:
+      - AttributeName: user_id
+        AttributeType: S
+
+      - AttributeName: username
+        AttributeType: S
+
+      - AttributeName: email
+        AttributeType: S
+
+      - AttributeName: fullname
+        AttributeType: S
+
+    KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+
+    GlobalSecondaryIndexes:
+      - IndexName: emailIndex
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+        Projection:
+          ProjectionType: ALL
+
+      - IndexName: usernameIndex
+        KeySchema:
+          - AttributeName: username
+            KeyType: HASH
+        Projection:
+          ProjectionType: ALL
+
+      - IndexName: fullnameIndex
+        KeySchema:
+          - AttributeName: fullname
+            KeyType: HASH
+        Projection:
+          ProjectionType: ALL
