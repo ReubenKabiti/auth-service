@@ -1,0 +1,23 @@
+RolesTable:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: RolesTable
+    BillingMode: PAY_PER_REQUEST
+    AttributeDefinitions:
+      - AttributeName: role_id
+        AttributeType: S
+
+      - AttributeName: role_name
+        AttributeType: S
+
+    KeySchema:
+      - AttributeName: role_id
+        KeyType: HASH
+
+    GlobalSecondaryIndexes:
+      - IndexName: roleNameIndex
+        KeySchema:
+          - AttributeName: role_name
+            KeyType: HASH
+        Projection:
+          ProjectionType: ALL

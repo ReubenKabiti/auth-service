@@ -1,0 +1,7 @@
+RolesTableIAM:
+  Effect: Allow
+  Action:
+    - dynamodb:*
+  Resource: 
+    - ${self:custom.RolesTable.Arn}
+    - !Join ['/', ['${self:custom.RolesTable.Arn}', 'index', 'roleNameIndex']]
