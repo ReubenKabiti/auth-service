@@ -11,6 +11,7 @@ provider:
 
   environment:
     UsersTableName: ${self:custom.UsersTable.Name}
+    RolesTableName: ${self:custom.RolesTable.Name}
 
 functions:
   auth:
@@ -78,5 +79,8 @@ custom:
   UsersTable:
     Arn: !GetAtt UsersTable.Arn
     Name: !Ref UsersTable
+  RolesTable:
+    Arn: !GetAtt RolesTable.Arn
+    Name: !Ref RolesTable
   apiGatewayCaching:
     enabled: false

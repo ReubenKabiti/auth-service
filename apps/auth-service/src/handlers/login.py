@@ -3,9 +3,9 @@ import boto3
 import json
 from passlib.hash import pbkdf2_sha256
 import datetime
+import os
 
-db = boto3.resource("dynamodb")
-table = db.Table("UsersTable")
+table = boto3.resource("dynamodb").Table(os.environ.get("UsersTableName"))
 
 def handler(event, context):
     body = json.loads(event.get("body"))

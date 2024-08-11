@@ -3,7 +3,7 @@ from uuid import uuid4 as uuid
 from passlib.hash import pbkdf2_sha256
 import json
 
-table = boto3.resource("dynamodb").Table("UsersTable")
+table = boto3.resource("dynamodb").Table(os.environ.get("UsersTableName"))
 
 def handler(event, context):
     body = json.loads(event.get("body"))
