@@ -17,7 +17,7 @@ UsersTable:
         AttributeType: S
 
     KeySchema:
-      - AttributeName: id
+      - AttributeName: user_id
         KeyType: HASH
 
     GlobalSecondaryIndexes:
