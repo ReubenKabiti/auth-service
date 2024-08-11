@@ -74,6 +74,7 @@ resources:
         StatusCode: '401'
           
     UsersTable: ${file(resources/UsersTable.yml):UsersTable}
+    RolesTable: ${file(resources/RolesTable.yml):RolesTable}
 
 custom:
   UsersTable:
