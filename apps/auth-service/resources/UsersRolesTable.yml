@@ -1,7 +1,7 @@
-RolesTable:
+UserRolesTable:
   Type: AWS::DynamoDB::Table
   Properties:
-    TableName: RolesTable
+    TableName: UserRolesTable
     BillingMode: PAY_PER_REQUEST
     AttributeDefinitions:
       - AttributeName: id
@@ -11,9 +11,9 @@ RolesTable:
       - AttributeName: id
         KeyType: HASH
 
-RolesTableIAM:
+UsersRolesTableIAM:
   Effect: Allow
   Action:
     - dynamodb:*
   Resource: 
-    - ${self:custom.RolesTable.Arn}
+    - ${self:custom.UsersRolesTable.Arn}

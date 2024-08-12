@@ -1,7 +1,7 @@
-RolesTable:
+PoliciesTable:
   Type: AWS::DynamoDB::Table
   Properties:
-    TableName: RolesTable
+    TableName: PoliciesTable
     BillingMode: PAY_PER_REQUEST
     AttributeDefinitions:
       - AttributeName: id
@@ -11,9 +11,9 @@ RolesTable:
       - AttributeName: id
         KeyType: HASH
 
-RolesTableIAM:
+PoliciesTableIAM:
   Effect: Allow
   Action:
     - dynamodb:*
   Resource: 
-    - ${self:custom.RolesTable.Arn}
+    - ${self:custom.PoliciessTable.Arn}

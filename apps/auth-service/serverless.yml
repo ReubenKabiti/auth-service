@@ -7,12 +7,22 @@ provider:
   runtime: python3.10
   region: "eu-north-1"
   iamRoleStatements:
-    - ${file(iam/UsersTableIAM.yml):UsersTableIAM}
-    - ${file(iam/RolesTableIAM.yml):RolesTableIAM}
+    - UsersTable: ${file(resources/UsersTable.yml):UsersTableIAM}
+    - RolesTable: ${file(resources/RolesTable.yml):RolesTableIAM}
+    - PermissionsTable: ${file(resources/PermissionsTable.yml):PermissionsTableIAM}
+    - PoliciesTable: ${file(resources/PoliciesTable.yml):PoliciesTableIAM}
+    - PolicyAssignmentsTable: ${file(resources/PolicyAssignmentsTable.yml):PolicyAssignmentsTableIAM}
+    - RolesPermissionsTable: ${file(resources/RolesPermissionsTable.yml):RolesPermissionsTableIAM}
+    - UsersRolesTable: ${file(resources/UsersRolesTable.yml):UsersRolesTableIAM}
 
   environment:
     UsersTableName: ${self:custom.UsersTable.Name}
     RolesTableName: ${self:custom.RolesTable.Name}
+    PermissionsTableName: ${self:custom.PermissionsTable.Name}
+    PoliciesTableName: ${self:custom.PoliciesTable.Name}
+    PolicyAssignmentsTableName: ${self:custom.PolicyAssignmentsTable.Name}
+    RolesPermissionsTableName: ${self:custom.RolesPermissionsTable.Name}
+    UsersRolesTableName: ${self:custom.UsersRolesTable.Name}
 
 functions:
   auth:
@@ -76,6 +86,11 @@ resources:
           
     UsersTable: ${file(resources/UsersTable.yml):UsersTable}
     RolesTable: ${file(resources/RolesTable.yml):RolesTable}
+    PermissionsTable: ${file(resources/PermissionsTable.yml):PermissionsTable}
+    PoliciesTable: ${file(resources/PoliciesTable.yml):PoliciesTable}
+    PolicyAssignmentsTable: ${file(resources/PolicyAssignmentsTable.yml):PolicyAssignmentsTable}
+    RolesPermissionsTable: ${file(resources/RolesPermissionsTable.yml):RolesPermissionsTable}
+    UsersRolesTable: ${file(resources/UsersRolesTable.yml):UsersRolesTable}
 
 custom:
   UsersTable:
@@ -84,5 +99,20 @@ custom:
   RolesTable:
     Arn: !GetAtt RolesTable.Arn
     Name: !Ref RolesTable
+  PermissionsTable:
+    Arn: !GetAtt PermissionsTable.Arn
+    Name: !Ref PermissionsTable
+  PoliciesTable:
+    Arn: !GetAtt PoliciesTable.Arn
+    Name: !Ref PoliciesTable
+  PolicyAssignmentsTable:
+    Arn: !GetAtt PolicyAssignmentsTable.Arn
+    Name: !Ref PolicyAssignmentsTable
+  RolesPermissionsTable:
+    Arn: !GetAtt RolesPermissionsTable.Arn
+    Name: !Ref RolesPermissionsTable
+  UsersRolesTable:
+    Arn: !GetAtt UsersRolesTable.Arn
+    Name: !Ref UsersRolesTable
   apiGatewayCaching:
     enabled: false

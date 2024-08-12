@@ -4,20 +4,14 @@ UsersTable:
     TableName: UsersTable
     BillingMode: PAY_PER_REQUEST
     AttributeDefinitions:
-      - AttributeName: user_id
-        AttributeType: S
-
-      - AttributeName: username
+      - AttributeName: id
         AttributeType: S
 
       - AttributeName: email
         AttributeType: S
 
-      - AttributeName: fullname
-        AttributeType: S
-
     KeySchema:
-      - AttributeName: user_id
+      - AttributeName: id
         KeyType: HASH
 
     GlobalSecondaryIndexes:
@@ -27,17 +21,11 @@ UsersTable:
             KeyType: HASH
         Projection:
           ProjectionType: ALL
-
-      # - IndexName: usernameIndex
-      #   KeySchema:
-      #     - AttributeName: username
-      #       KeyType: HASH
-      #   Projection:
-      #     ProjectionType: ALL
-
-      # - IndexName: fullnameIndex
-      #   KeySchema:
-      #     - AttributeName: fullname
-      #       KeyType: HASH
-        # Projection:
-        #   ProjectionType: ALL
+            
+UsersTableIAM:
+  Effect: Allow
+  Action:
+    - dynamodb:*
+  Resource: 
+    - ${self:custom.UsersTable.Arn}
+    - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', 'emailIndex']]
