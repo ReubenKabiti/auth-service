@@ -1,4 +1,4 @@
-UserRolesTable:
+UsersRolesTable:
   Type: AWS::DynamoDB::Table
   Properties:
     TableName: UserRolesTable

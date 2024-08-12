@@ -16,4 +16,4 @@ PoliciesTableIAM:
   Action:
     - dynamodb:*
   Resource: 
-    - ${self:custom.PoliciessTable.Arn}
+    - ${self:custom.PoliciesTable.Arn}
