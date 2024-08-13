@@ -11,10 +11,10 @@ class Resource:
 
     def get_url(self):
         url_parts = self.request["url"]["path"]
-        id_pattern = r"\{[a-zA-Z_]+[a-zA-Z_0-9]\}"
+        slug_pattern = r"\{[a-zA-Z_]+[a-zA-Z_0-9]\}"
 
         for i, part in enumerate(url_parts):
-            if re.match(id_pattern, part):
+            if re.match(slug_pattern, part):
                 url_parts[i] = "*"
 
         return "/".join(url_parts)
