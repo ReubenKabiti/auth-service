@@ -1,0 +1,1847 @@
+{
+    "item": [
+        {
+            "name": "Receipts",
+            "item": [
+                {
+                    "name": "Thresholds",
+                    "item": [
+                        {
+                            "name": "Create Threshold",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "receipts",
+                                        "thresholds"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Update Threshold",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "receipts",
+                                        "thresholds",
+                                        "update"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get A Store's Threshold",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "receipts",
+                                        "thresholds",
+                                        "{id}"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "History",
+                    "item": [
+                        {
+                            "name": "Get Receipt History",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "receipts",
+                                        "history",
+                                        "{receipt_id}"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Get All Receipts",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "receipts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Receipts By Status",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "receipts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Receipts By Customer",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "receipts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Receipts By Customer And Date Range",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "receipts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Receipts By Date Range",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "receipts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Receipts By Date Range And Status",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "receipts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get A Single Receipt",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "receipts",
+                                "{receipt_id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get All Receipt With Missing Items",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "receipts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Confirmed Quantity",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "receipts",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Confirm Hard Receipt",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "receipts",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Confirm Soft Receipt",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "receipts",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Missing Quantity",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "receipts",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Missing Quantity",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "receipts",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Receipt",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "receipts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Set Receipt To Missing",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "receipts",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Comment To Receipt",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "receipts",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Waiter",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "receipts",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Customer To Receipt",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "receipts",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Receipt History After Refund",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "receipts",
+                                "history",
+                                "refunds"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Loyverse",
+            "item": [
+                {
+                    "name": "Webhooks",
+                    "item": [
+                        {
+                            "name": "Inventory Update",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "loyverse",
+                                        "webhooks",
+                                        "inventory-update"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Item Update",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "loyverse",
+                                        "webhooks",
+                                        "item-update"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Receipt Update",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "loyverse",
+                                        "webhooks",
+                                        "receipt-update"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Customer Update",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "loyverse",
+                                        "webhooks",
+                                        "customer-update"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Typesense",
+                    "item": [
+                        {
+                            "name": "Populate Typensese Collection",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "loyverse",
+                                        "typesense",
+                                        "collections",
+                                        "populate"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "De-Populate Typensese Collection",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "typesense",
+                                        "collections",
+                                        "depopulate"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Relationships",
+                    "item": [
+                        {
+                            "name": "Get Relationship",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "loyverse",
+                                        "relationships"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Generate Relationships",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "loyverse",
+                                        "relationships",
+                                        "generate"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Create Backup of all Items",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "loyverse",
+                                        "backup"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Events",
+                    "item": [
+                        {
+                            "name": "Get Loyverse Events By Date and Type",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "loyverse",
+                                        "events"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Generate Extensions",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "item-extensions",
+                                "generate"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Restore All Backup of all Items",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "restore-backed-up-items"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Backup An Image",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "store-image"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Upload Image To Loyvese",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "items",
+                                "image",
+                                "upload"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Store",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "stores",
+                                "{store_id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Customers",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "customers"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Customer",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "customers",
+                                "{id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Employee",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "employees",
+                                "{id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Items",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "items",
+                                "{id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Receipts",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "receipts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Missing Receipts",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "missing-receipts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Stores",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "stores",
+                                "{id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Receipt",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "receipts",
+                                "2-1017"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Inventory",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "inventory",
+                                "{id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Variant",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "variants",
+                                "{id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Route Request",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "router"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Missing Receipts",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "loyverse",
+                                "missing-receipts"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Users",
+            "item": [
+                {
+                    "name": "Create a User",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "users"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update User",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "path": [
+                                "users"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Verify User",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "users",
+                                "verify"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Veryfiy User Token",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "users",
+                                "verify",
+                                "token"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Revive User Token",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "users",
+                                "revive-token",
+                                "token"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get a User",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "users",
+                                "{id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Users",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "users"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Inventory",
+            "item": [
+                {
+                    "name": "Templates",
+                    "item": [
+                        {
+                            "name": "Get Templates",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "inventory",
+                                        "templates"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Create Template",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "inventory",
+                                        "templates"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Update Template",
+                            "request": {
+                                "method": "PUT",
+                                "url": {
+                                    "path": [
+                                        "inventory",
+                                        "templates"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Delete Template",
+                            "request": {
+                                "method": "DELETE",
+                                "url": {
+                                    "path": [
+                                        "inventory",
+                                        "templates"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get Template Items",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "inventory",
+                                        "templates",
+                                        "items"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Get Inventory Item History",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "inventory",
+                                "{id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Inventory History",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "inventory"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Inventory Discrepancies",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "inventory",
+                                "discrepancies",
+                                "{store_id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Inventory History Item",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "inventory"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Item Inventory",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "inventory",
+                                "in_stock",
+                                "{id}"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Customers",
+            "item": [
+                {
+                    "name": "Get Customers",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "customers"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Customer",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "customers",
+                                "{id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Customer",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "path": [
+                                "customers"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Customer",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "customers"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Merchants",
+            "item": [
+                {
+                    "name": "Get Merchants",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "merchants"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Merchant",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "merchants",
+                                "{id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Merchant",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "path": [
+                                "merchants"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Merchant",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "merchants"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Purchase Orders",
+            "item": [
+                {
+                    "name": "Suppliers",
+                    "item": [
+                        {
+                            "name": "Get a single supplier",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "purchase-orders",
+                                        "suppliers",
+                                        ":supplier_id"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Delete a single supplier",
+                            "request": {
+                                "method": "DELETE",
+                                "url": {
+                                    "path": [
+                                        "purchase-orders",
+                                        "suppliers",
+                                        ":supplier_id"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get a list of suppliers",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "purchase-orders",
+                                        "suppliers",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Create or update a single supplier",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "purchase-orders",
+                                        "suppliers"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Payments",
+                    "item": [
+                        {
+                            "name": "Create Payment for Purchase Order",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "purchase-orders",
+                                        "payments",
+                                        "record"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get Purchase Order Payment History",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "purchase-orders",
+                                        "payments",
+                                        "history",
+                                        "{purchase_order_id}"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get Purchase Order Payment Summary",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "purchase-orders",
+                                        "payments",
+                                        "summary",
+                                        "STORE",
+                                        "{store_id}"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get Purchase Order Payment Summaries",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "purchase-orders",
+                                        "payments",
+                                        "summary"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Receive",
+                    "item": []
+                },
+                {
+                    "name": "Get Purchase Orders",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "purchase-orders"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Purchase Order",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "purchase-orders",
+                                "{purchase_order_id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Customer",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "path": [
+                                "customers"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Purchase Order",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "purchase-orders"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Items",
+            "item": [
+                {
+                    "name": "History",
+                    "item": [
+                        {
+                            "name": "Get Item History",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "items",
+                                        "history",
+                                        "{id}"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Create an Item Extension",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "items"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create a Loyverse Item",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "items",
+                                "create-loyverse-item"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get item Extension",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "items",
+                                "{id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Cost",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "items",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Price",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "items",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Name",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "items",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Low Stock Threshold",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "items",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Availability",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "items",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Controllability",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "items",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Package Quantity",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "items",
+                                "update"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Composed Item",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "items",
+                                "update"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Images",
+            "item": [
+                {
+                    "name": "Upload Item Image",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "images",
+                                "items",
+                                "upload"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Upload Promo Image",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "images",
+                                "promotions",
+                                "upload"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Inventory",
+            "item": [
+                {
+                    "name": "Get Inventory History By Id",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "inventory",
+                                "{id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Inventory History",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "inventory"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Inventory History Item",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "inventory"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Clients",
+            "item": [
+                {
+                    "name": "Debts",
+                    "item": [
+                        {
+                            "name": "Create debt after Failure",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "debts",
+                                        "create",
+                                        "after-failure"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get debt by Receipt",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "debts",
+                                        "{receipt_id}"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get debts",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "debts"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get Debts by Customer Debt",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "debts",
+                                        "customers",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get customer debts",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "debts",
+                                        "customers",
+                                        "{id}"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get customer debt by customer_debt_id",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "debts",
+                                        "customers",
+                                        ":customer_debt_id"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get customer debt by customer id",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "debts",
+                                        "customers",
+                                        "by-customer",
+                                        "{id}"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Create customer debt after failure",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "debts",
+                                        "create",
+                                        "after-failure"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Update customer debt after failing",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "debts",
+                                        "update",
+                                        "after-refund-failure"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Loans",
+                    "item": [
+                        {
+                            "name": "Get loan by loan id",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "loans",
+                                        "{loan_id}"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get loans",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "loans"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get borrower loans",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "loans",
+                                        "borrowers"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get borrower loan by borrower loan id",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "loans",
+                                        "borrowers",
+                                        "{id}"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get borrower loan by borrower",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "loans",
+                                        "borrowers",
+                                        "by-borrower"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Create loan after failure",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "loans",
+                                        "create",
+                                        "after-failure"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Create loan",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "loans",
+                                        "create"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get Loans By Borrower",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "clients",
+                                        "loans",
+                                        "borrowers",
+                                        "by-borrower"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Events",
+            "item": [
+                {
+                    "name": "Get Events",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "events"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Payments",
+            "item": [
+                {
+                    "name": "Create Debt Payment",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "payments",
+                                "debts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Allocate payments",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "payments",
+                                "allocations"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Loan Payment",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "payments",
+                                "loans"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Receipt Payment",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "payments",
+                                "receipts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Payments",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "payments"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Account",
+            "item": [
+                {
+                    "name": "Liabilities",
+                    "item": [
+                        {
+                            "name": "Get Client Liabilities",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "path": [
+                                        "accounts",
+                                        "liabilities",
+                                        "{store_id}"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Get Account By Owner",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "accounts",
+                                ":owner_id"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Accounts",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "accounts"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Promotions",
+            "item": [
+                {
+                    "name": "Upload Promotion Image",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "images",
+                                "promotions",
+                                "upload"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Promotion",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "path": [
+                                "promotions",
+                                "{merchant_id}",
+                                "{store_id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Promotion",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "path": [
+                                "promotions",
+                                "{merchant_id}",
+                                "{store_id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Promotion",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "promotions",
+                                "{merchant_id}",
+                                "{store_id}",
+                                "{id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Promotions",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "promotions",
+                                "{merchant_id}",
+                                "{store_id}",
+                                "{id}"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Reports",
+            "item": [
+                {
+                    "name": "Get Sales Reports",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "reports",
+                                "sales",
+                                "{store_id}"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Inventory Value",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "path": [
+                                "reports",
+                                "inventory-value",
+                                "{store_id}"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

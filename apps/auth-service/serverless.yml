@@ -7,13 +7,13 @@ provider:
   runtime: python3.10
   region: "eu-north-1"
   iamRoleStatements:
-    - UsersTable: ${file(resources/UsersTable.yml):UsersTableIAM}
-    - RolesTable: ${file(resources/RolesTable.yml):RolesTableIAM}
-    - PermissionsTable: ${file(resources/PermissionsTable.yml):PermissionsTableIAM}
-    - PoliciesTable: ${file(resources/PoliciesTable.yml):PoliciesTableIAM}
-    - PolicyAssignmentsTable: ${file(resources/PolicyAssignmentsTable.yml):PolicyAssignmentsTableIAM}
-    - RolesPermissionsTable: ${file(resources/RolesPermissionsTable.yml):RolesPermissionsTableIAM}
-    - UsersRolesTable: ${file(resources/UsersRolesTable.yml):UsersRolesTableIAM}
+    - ${file(resources/UsersTable.yml):UsersTableIAM}
+    - ${file(resources/RolesTable.yml):RolesTableIAM}
+    - ${file(resources/PermissionsTable.yml):PermissionsTableIAM}
+    - ${file(resources/PoliciesTable.yml):PoliciesTableIAM}
+    - ${file(resources/PolicyAssignmentsTable.yml):PolicyAssignmentsTableIAM}
+    - ${file(resources/RolesPermissionsTable.yml):RolesPermissionsTableIAM}
+    - ${file(resources/UsersRolesTable.yml):UsersRolesTableIAM}
 
   environment:
     UsersTableName: ${self:custom.UsersTable.Name}
