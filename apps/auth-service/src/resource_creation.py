@@ -1,4 +1,5 @@
 import json
+import re
 
 class Resource:
     def __init__(self, name, request):
@@ -7,6 +8,20 @@ class Resource:
 
     def __repr__(self):
         return f"{self.name} -- {self.request}"
+
+    def get_url(self):
+        url_parts = self.request["url"]["path"]
+        id_pattern = r"\{[a-zA-Z_]+[a-zA-Z_0-9]\}"
+
+        for i, part in enumerate(url_parts):
+            if re.match(id_pattern, part):
+                url_parts[i] = "*"
+
+        return "/".join(url_parts)
+
+
+    def get_action(self):
+        return f'Action::"{self.request.get("method")}"'
 
 def get_all_resources(json_text):
     def __helper(items, parent=None, request=None):
@@ -18,7 +33,7 @@ def get_all_resources(json_text):
 
         for item in items:
             new_items = item.get("item")
-            item_name = item.get("name")
+            item_name = item.get("name").replace(" ", "")
             request = item.get("request")
             new_parent_name = None
             if parent is None:
@@ -44,4 +59,5 @@ def test_get_all_resources():
         json_text = file.read()
 
     res = get_all_resources(json_text)
-    print(res)
+    for r in res:
+        print(r.get_url())
