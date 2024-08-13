@@ -1,23 +1,32 @@
 import json
 
+class Resource:
+    def __init__(self, name, request):
+        self.name = name
+        self.request = request
+
+    def __repr__(self):
+        return f"{self.name} -- {self.request}"
+
 def get_all_resources(json_text):
-    def __helper(items, parent=None):
+    def __helper(items, parent=None, request=None):
 
         paths = []
 
         if items is None:
-            return parent
+            return Resource(name=parent, request=request)
 
         for item in items:
             new_items = item.get("item")
             item_name = item.get("name")
+            request = item.get("request")
             new_parent_name = None
             if parent is None:
                 new_parent_name = item_name
             else:
                 new_parent_name = f"{parent}::\"{item_name}\""
-            out = __helper(new_items, new_parent_name)
-            if type(out) is str:
+            out = __helper(items=new_items, parent=new_parent_name, request=request)
+            if type(out) is Resource:
                 paths.append(out)
             else:
                 paths.extend(out)
