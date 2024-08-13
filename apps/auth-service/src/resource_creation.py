@@ -7,7 +7,10 @@ class Resource:
         self.request = request
 
     def __repr__(self):
-        return f"{self.name} -- {self.request}"
+        o = f"{self.name}\n"
+        o += f"{self.get_url()}\n"
+        o += f"{self.get_action()}\n"
+        return o
 
     def get_url(self):
         url_parts = self.request["url"]["path"]
@@ -60,4 +63,4 @@ def test_get_all_resources():
 
     res = get_all_resources(json_text)
     for r in res:
-        print(r.get_url())
+        print(r)
