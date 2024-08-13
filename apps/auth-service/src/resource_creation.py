@@ -17,16 +17,22 @@ def get_all_resources(json_text):
             else:
                 new_parent_name = f"{parent}::\"{item_name}\""
             out = __helper(new_items, new_parent_name)
-            paths.append(out)
+            if type(out) is str:
+                paths.append(out)
+            else:
+                paths.extend(out)
         return paths
+
 
     map = json.loads(json_text)
     items = map.get("item")
-    return __helper(items)
+    res = __helper(items)
+    return res
 
 
 def test_get_all_resources():
     with open("cedar_test_resources.json", "r") as file:
         json_text = file.read()
+
     res = get_all_resources(json_text)
     print(res)
