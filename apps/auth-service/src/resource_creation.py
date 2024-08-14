@@ -1,7 +1,10 @@
 import json
 import re
 
-class Resource:
+class ResourceAction:
+    """
+    Class for storing actions and the resource they affects
+    """
     def __init__(self, name, request):
         self.name = name
         self.request = request
@@ -26,13 +29,16 @@ class Resource:
     def get_action(self):
         return f'Action::"{self.request.get("method")}"'
 
+    def get_action_name(self):
+        return self.name.split("::")[-1].replace('"', "")
+
 def get_all_resources(json_text):
     def __helper(items, parent=None, request=None):
 
         paths = []
 
         if items is None:
-            return Resource(name=parent, request=request)
+            return ResourceAction(name=parent, request=request)
 
         for item in items:
             new_items = item.get("item")
@@ -44,7 +50,7 @@ def get_all_resources(json_text):
             else:
                 new_parent_name = f"{parent}::\"{item_name}\""
             out = __helper(items=new_items, parent=new_parent_name, request=request)
-            if type(out) is Resource:
+            if type(out) is ResourceAction:
                 paths.append(out)
             else:
                 paths.extend(out)
@@ -56,11 +62,24 @@ def get_all_resources(json_text):
     res = __helper(items)
     return res
 
+def create_policy(resource_action):
+    return f"""
+        permit(
+            principal,
+            action == { resource_action.get_action() },
+            resource == { resource_action.name }
+        );
+    """
 
-def test_get_all_resources():
-    with open("cedar_test_resources.json", "r") as file:
-        json_text = file.read()
+# def generate_policies(json_text):
+#     resources = get_all_resources(json_text)
+#     for resource in resources:
 
-    res = get_all_resources(json_text)
-    for r in res:
-        print(r)
+# def test_get_all_resources():
+#     with open("cedar_test_resources.json", "r") as file:
+#         json_text = file.read()
+
+#     res = get_all_resources(json_text)
+#     for r in res:
+#         # print(r.get_action_name())
+#         print(create_policy(r))
