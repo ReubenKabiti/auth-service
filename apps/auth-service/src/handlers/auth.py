@@ -3,6 +3,8 @@ import boto3
 import jwt
 import re
 
+# from lib.resource_creation import 
+
 from cedarpy import is_authorized, Decision
 
 def generate_policy(principal_id, effect, resource, context=None):
