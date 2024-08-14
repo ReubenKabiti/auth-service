@@ -8,6 +8,8 @@ class ResourceAction:
     def __init__(self, name, request):
         self.name = name
         self.request = request
+        self.action = self.get_action()
+        self.regex = self.get_regex()
 
     def __repr__(self):
         o = f"{self.name}\n"
@@ -17,10 +19,11 @@ class ResourceAction:
 
     def get_url(self):
         url_parts = self.request["url"]["path"]
-        slug_pattern = r"\{[a-zA-Z_]+[a-zA-Z_0-9]\}"
+        slug_pattern_1 = r"\{[a-zA-Z_]+[a-zA-Z_0-9]\}"
+        slug_pattern_2 = r"^:[a-zA-Z_]+[a-zA-Z_0-9]"
 
         for i, part in enumerate(url_parts):
-            if re.match(slug_pattern, part):
+            if re.match(slug_pattern_1, part) or re.match(slug_pattern_2, part):
                 url_parts[i] = "*"
 
         return "/".join(url_parts)
@@ -29,8 +32,15 @@ class ResourceAction:
     def get_action(self):
         return f'Action::"{self.request.get("method")}"'
 
-    def get_action_name(self):
+    def get_policy_name(self):
         return self.name.split("::")[-1].replace('"', "")
+
+    def get_regex(self):
+        url = self.get_url()
+        slug_pattern = r"[0-9a-zA-Z_]"
+        url = url.replace("*", slug_pattern)
+        url = f"/?{url}/?"
+        return url
 
 def get_all_resources(json_text):
     def __helper(items, parent=None, request=None):
@@ -63,23 +73,23 @@ def get_all_resources(json_text):
     return res
 
 def create_policy(resource_action):
-    return f"""
-        permit(
-            principal,
-            action == { resource_action.get_action() },
-            resource == { resource_action.name }
-        );
-    """
+    return f"""permit(
+    principal,
+    action == { resource_action.get_action() },
+    resource == { resource_action.name }
+);
+        """
 
 # def generate_policies(json_text):
 #     resources = get_all_resources(json_text)
 #     for resource in resources:
 
-# def test_get_all_resources():
-#     with open("cedar_test_resources.json", "r") as file:
-#         json_text = file.read()
+def test_get_all_resources():
+    with open("cedar_test_resources.json", "r") as file:
+        json_text = file.read()
 
-#     res = get_all_resources(json_text)
-#     for r in res:
-#         # print(r.get_action_name())
-#         print(create_policy(r))
+    res = get_all_resources(json_text)
+    for r in res:
+        print(create_policy(r))
+        # print(f"{r.get_url()} -- {r.get_action()}")
+        # print(r.get_regex())
