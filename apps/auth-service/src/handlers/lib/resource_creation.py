@@ -1,14 +1,15 @@
 import json
 import re
+from typing import List
 
 class Policy:
 
-    def __init__(self, resource_endpoint, action, action_name):
+    def __init__(self, resource_endpoint: str, action: str, action_name: str):
         self.resource_endpoint = resource_endpoint
         self.action = action
         self.action_name = action_name
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"""permit(
     principal,
     action == Action::\"{self.action}\",
@@ -18,8 +19,8 @@ class Policy:
     """
 
 
-def get_all_policies(json_text):
-    def __traverse_items(items, policies=[]):
+def get_all_policies(json_text: str) -> List[Policy]:
+    def __traverse_items(items, policies: List[Policy]):
         for i in items:
             request = i.get("request")
             if not request is None:
