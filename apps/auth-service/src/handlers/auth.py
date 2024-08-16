@@ -2,10 +2,20 @@ import json
 import boto3
 import jwt
 import re
+import os
 
-# from lib.resource_creation import 
+from lib.resource_creation import get_all_policies
 
 from cedarpy import is_authorized, Decision
+
+s3 = boto3.client("s3")
+
+def load_test_resources_file():
+    bucket_name = os.environ.get("MyBucketName", "my-bucket-1fc71d36")
+    key = "cedar_test_resources.json"
+    res = s3.get_object(Bucket=bucket_name, Key=key)
+    file_content = res["Body"].read().decode("utf-8")
+    return file_content
 
 def generate_policy(principal_id, effect, resource, context=None):
     res = { "principalId": principal_id }
@@ -32,37 +42,13 @@ def extract_method_and_resource(event):
 
     return http_method, resource_path
 
-def generate_cedar_policies(event):
-    policies = r"""
-    permit (
-        principal,
-        action,
-        resource
-    );
-    // prevent someone from creating a store for someone else
-    forbid (
-        principal,
-        action == Action::"POST",
-        resource == Api::"/store"
-    ) unless { principal == resource.owner };
-
-    """
-    return policies
-
-def match_request(event):
+def match_request(policies, event):
 
     _, resource = extract_method_and_resource(event)
-    patterns = {
-        r"(signup)/?": "/signup",
-        r"(login)/?": "/login",
-        r"(product)/?": "/product",
-        r"(product)/([0-9a-z\-]+)/?": "/product/{id}",
-        r"(product)/([0-9a-z\-]+)/products/?": "/product/{id}",
-        r"(store)/?": "/store",
-        r"(store)/([0-9a-z\-]+)/?": "/store/{id}",
-        r"(store)/([0-9a-z\-]+)/(delete)/?": "/store/{id}/delete",
-        r"(store)/([0-9a-z\-]+)/(products)/?": "/store/{id}/products",
-    }
+    patterns = { }
+
+    for policy in policies:
+        patterns[policy.regex] = policy.resource_endpoint 
 
     for pattern in patterns.keys():
         result = re.findall(pattern, resource)
@@ -72,44 +58,13 @@ def match_request(event):
     return None, None
 
 
-def generate_cedar_entities(event, user):
-    # the way the entities are generated depends on the resource being accessed
+def generate_cedar_entities():
     entities = []
-
-    method, _ = extract_method_and_resource(event)
-    _, resource = match_request(event)
-    print(f"matched resource {resource}")
-
-    if resource == "/store":
-        if method == "POST":
-            p = {
-                "uid": {
-                    "type": "User",
-                    "id": user["id"]
-                },
-                "parents": [],
-                "attrs": {}
-            }
-            r = {
-                "uid": {
-                    "type": "Api",
-                    "id": "/store"
-                },
-                "parents": [],
-                "attrs": {
-                    "owner": { "__entity": {
-                        "type": "User",
-                        "id": user["id"]
-                    }}
-                }
-            }
-            entities.append(p)
-            entities.append(r)
     return entities
 
-def generate_cedar_request(event, user):
+def generate_cedar_request(policies, event, user):
     method, _ = extract_method_and_resource(event)
-    _, resource = match_request(event)
+    _, resource = match_request(policies, event)
 
     p = f"User::\"{user['id']}\""
     a = f"Action::\"{method}\""
@@ -122,6 +77,9 @@ def generate_cedar_request(event, user):
         "context": {}
     }
 
+def get_policies(user_id):
+    return ""
+
 def evalute_cedar(p, e, r):
     decision = is_authorized(r, p, e)
     return Decision.Allow == decision.decision
@@ -133,10 +91,11 @@ def handler(event, context):
         user = jwt.decode(token, "author", algorithms=["HS256"])
         if user is None:
            return json.loads(generate_policy("user", "Deny", event["methodArn"]))
-        
-        policies = generate_cedar_policies(event)
-        entities = generate_cedar_entities(event, user)
-        request = generate_cedar_request(event, user)
+        json_text = load_test_resources_file()
+        p = get_all_policies(json_text)
+        policies = get_policies(user["id"])
+        entities = generate_cedar_entities()
+        request = generate_cedar_request(p, event, user)
         print(f"policies = {policies}")
         print(f"entities = {entities}")
         print(f"request = {request}")

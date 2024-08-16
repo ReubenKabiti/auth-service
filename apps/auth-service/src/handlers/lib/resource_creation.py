@@ -8,6 +8,15 @@ class Policy:
         self.resource_endpoint = resource_endpoint
         self.action = action
         self.action_name = action_name
+        
+        # generate the regex for paths with variables in them
+        end_point_parts = resource_endpoint.split("/")
+        for i, part in enumerate(end_point_parts):
+            if part == "*":
+                end_point_parts[i] = r"[0-9a-zA-Z\-]+"
+        self.regex = "/".join(end_point_parts)
+        self.regex = f"/?{self.regex}/?"
+
 
     def __repr__(self) -> str:
         return f"""permit(

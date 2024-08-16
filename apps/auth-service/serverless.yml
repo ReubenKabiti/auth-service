@@ -101,7 +101,7 @@ resources:
     MyBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: MyBucket-ea077d56-dcb6-4ae8-b702-38b616cd102f
+        BucketName: my-bucket-1fc71d36
 
 custom:
   UsersTable:
