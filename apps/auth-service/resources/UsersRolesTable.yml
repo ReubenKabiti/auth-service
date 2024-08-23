@@ -6,10 +6,19 @@ UsersRolesTable:
     AttributeDefinitions:
       - AttributeName: id
         AttributeType: S
+      - AttributeName: userId
+        AttributeType: S
 
     KeySchema:
       - AttributeName: id
         KeyType: HASH
+    GlobalSecondaryIndexes:
+      - IndexName: userIdIndex
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        Projection:
+          ProjectionType: ALL
 
 UsersRolesTableIAM:
   Effect: Allow
@@ -17,3 +26,4 @@ UsersRolesTableIAM:
     - dynamodb:*
   Resource: 
     - ${self:custom.UsersRolesTable.Arn}
+    - !Join ['/', ['${self:custom.UsersRolesTable.Arn}', 'index', 'userIdIndex']]

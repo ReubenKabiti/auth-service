@@ -6,10 +6,21 @@ RolesPermissionsTable:
     AttributeDefinitions:
       - AttributeName: id
         AttributeType: S
+      - AttributeName: roleId
+        AttributeType: S
 
     KeySchema:
       - AttributeName: id
         KeyType: HASH
+
+    GlobalSecondaryIndexes:
+      - IndexName: roleIdIndex
+        KeySchema:
+          - AttributeName: roleId
+            KeyType: HASH
+        Projection:
+          ProjectionType: ALL
+            
 
 RolesPermissionsTableIAM:
   Effect: Allow
