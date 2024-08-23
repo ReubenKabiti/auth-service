@@ -9,9 +9,6 @@ users_roles_table = db.Table(os.environ["UsersRolesTableName"])
 roles_permissions_table = db.Table(os.environ["RolesPermissionsTableName"])
 policies_table = db.Table(os.environ["PoliciesTableName"])
 
-def extract_resource_and_regex(policy):
-    pass
-
 def get_user_policies(user_id):
     policies = []
     try:

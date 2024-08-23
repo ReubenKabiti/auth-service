@@ -8,6 +8,20 @@ from .lib.get_user_policies import get_user_policies
 
 from cedarpy import is_authorized, Decision
 
+def extract_resources_from_policy(policies):
+    resource_pattern = r'(resource)\s==\sApi::"([0-9a-zA-Z_\-/]+)"'
+    matches = re.findall(resource_pattern, policies)
+    regex_resource = {}
+    slug_pattern = r"[0-9a-zA-Z\-]+"
+    for match in matches:
+        _, resource = match
+        regex = resource.replace("*", slug_pattern)
+        regex = f"{regex}/?"
+        regex_resource[regex] = resource
+    return regex_resource
+
+
+
 def generate_policy(principal_id, effect, resource, context=None):
     res = { "principalId": principal_id }
     if (effect and resource):
@@ -31,14 +45,21 @@ def extract_method_and_resource(event):
     http_method = api_gateway_parts[2]
     resource_path = "/".join(api_gateway_parts[3:])
 
-    return http_method, resource_path
+    return http_method, f"/{resource_path}"
+
+def match_request(policies, resource_raw):
+    regex_resource = extract_resources_from_policy(policies)
+    print(regex_resource, resource_raw)
+    for regex in regex_resource:
+        if re.match(regex, resource_raw):
+            return regex_resource[regex]
+
 
 def generate_cedar_entities():
     entities = []
     return entities
 
-def generate_cedar_request(event, user):
-    method, resource = extract_method_and_resource(event)
+def generate_cedar_request(user, method, resource):
 
     p = f"User::\"{user['id']}\""
     a = f"Action::\"{method}\""
@@ -63,15 +84,26 @@ def handler(event, context):
     token = event["authorizationToken"]
     try:
         user = jwt.decode(token, "author", algorithms=["HS256"])
+
         if user is None:
            return json.loads(generate_policy("user", "Deny", event["methodArn"]))
+
         policies = "\n".join(get_policies(user["id"]))
         entities = generate_cedar_entities()
-        request = generate_cedar_request(event, user)
+        method, resource_raw = extract_method_and_resource(event)
+        resource = match_request(policies, resource_raw)
+
+        if resource is None:
+           return json.loads(generate_policy("user", "Deny", event["methodArn"]))
+
+        request = generate_cedar_request(user, method, resource)
+
         print(f"policies = {policies}")
         print(f"entities = {entities}")
         print(f"request = {request}")
+
         decision = evalute_cedar(policies, entities, request)
+
         print(f"decision = {decision}")
         # if decision:
         if True: # ignore policies for now
