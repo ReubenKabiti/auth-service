@@ -6,6 +6,7 @@ policy_assignments_table = db.Table(os.environ["PolicyAssignmentsTableName"])
 users_table = db.Table(os.environ["UsersTableName"])
 users_roles_table = db.Table(os.environ["UsersRolesTableName"])
 roles_permissions_table = db.Table(os.environ["RolesPermissionsTableName"])
+policies_table = db.Table(os.environ["PoliciesTableName"])
 
 def get_user_policies(user_id):
     policies = []
@@ -52,4 +53,11 @@ def get_user_policies(user_id):
 
     except Exception as e:
         print(e)
-    return policies
+
+    # finally, after everything is done, get the policy defitions
+    policy_defs = []
+    for policy_id in policies:
+        policy = policies_table.get_item(Key={"id": policy_id})["Item"]["policy_defition"]
+        policy_defs.append(policy)
+    return policy_defs
+
