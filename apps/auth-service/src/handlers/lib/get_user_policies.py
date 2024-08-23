@@ -1,5 +1,6 @@
 import boto3
 import os
+import re
 
 db = boto3.resource("dynamodb")
 policy_assignments_table = db.Table(os.environ["PolicyAssignmentsTableName"])
@@ -7,6 +8,9 @@ users_table = db.Table(os.environ["UsersTableName"])
 users_roles_table = db.Table(os.environ["UsersRolesTableName"])
 roles_permissions_table = db.Table(os.environ["RolesPermissionsTableName"])
 policies_table = db.Table(os.environ["PoliciesTableName"])
+
+def extract_resource_and_regex(policy):
+    pass
 
 def get_user_policies(user_id):
     policies = []
@@ -57,7 +61,9 @@ def get_user_policies(user_id):
     # finally, after everything is done, get the policy defitions
     policy_defs = []
     for policy_id in policies:
-        policy = policies_table.get_item(Key={"id": policy_id})["Item"]["policy_defition"]
+        policy = policies_table.get_item(Key={"id": policy_id.strip()})
+        item = policy.get("Item", {"policy_definition": ""})
+        policy = item.get("policy_definition", "")
         policy_defs.append(policy)
     return policy_defs
 
