@@ -2,6 +2,7 @@ import boto3
 from uuid import uuid4 as uuid
 from passlib.hash import pbkdf2_sha256
 import json
+import os
 
 table = boto3.resource("dynamodb").Table(os.environ.get("UsersTableName"))
 

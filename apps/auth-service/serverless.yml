@@ -14,11 +14,6 @@ provider:
     - ${file(resources/PolicyAssignmentsTable.yml):PolicyAssignmentsTableIAM}
     - ${file(resources/RolesPermissionsTable.yml):RolesPermissionsTableIAM}
     - ${file(resources/UsersRolesTable.yml):UsersRolesTableIAM}
-    - Effect: Allow
-      Action:
-        - s3:*
-      Resource:
-        - ${self:custom.MyBucket.Arn}
 
   environment:
     UsersTableName: ${self:custom.UsersTable.Name}
@@ -28,13 +23,11 @@ provider:
     PolicyAssignmentsTableName: ${self:custom.PolicyAssignmentsTable.Name}
     RolesPermissionsTableName: ${self:custom.RolesPermissionsTable.Name}
     UsersRolesTableName: ${self:custom.UsersRolesTable.Name}
-    MyBucketName: ${self:custom.MyBucket.Name}
 
 functions:
   auth:
     handler: src/handlers/auth.handler
     cors: true
-
 
   signup:
     handler: src/handlers/signup.handler
@@ -43,6 +36,15 @@ functions:
           path: /signup
           method: post
           cors: true
+
+  protected:
+    handler: src/handlers/protected.handler
+    events:
+      - http:
+          path: /protected
+          method: get
+          cors: true
+          authorizer: auth
 
   login:
     handler: src/handlers/login.handler
@@ -125,8 +127,5 @@ custom:
   UsersRolesTable:
     Arn: !GetAtt UsersRolesTable.Arn
     Name: !Ref UsersRolesTable
-  MyBucket:
-    Arn: !GetAtt MyBucket.Arn
-    Name: !Ref MyBucket
   apiGatewayCaching:
     enabled: false
