@@ -4,6 +4,8 @@ import jwt
 import re
 import os
 
+from .lib.get_user_policies import get_user_policies
+
 from cedarpy import is_authorized, Decision
 
 def generate_policy(principal_id, effect, resource, context=None):
@@ -35,7 +37,7 @@ def generate_cedar_entities():
     entities = []
     return entities
 
-def generate_cedar_request(policies, event, user):
+def generate_cedar_request(event, user):
     method, resource = extract_method_and_resource(event)
 
     p = f"User::\"{user['id']}\""
@@ -50,7 +52,7 @@ def generate_cedar_request(policies, event, user):
     }
 
 def get_policies(user_id):
-    return ""
+    return get_user_policies(user_id)
 
 def evalute_cedar(p, e, r):
     decision = is_authorized(r, p, e)
@@ -63,11 +65,9 @@ def handler(event, context):
         user = jwt.decode(token, "author", algorithms=["HS256"])
         if user is None:
            return json.loads(generate_policy("user", "Deny", event["methodArn"]))
-        json_text = load_test_resources_file()
-        p = get_all_policies(json_text)
-        policies = get_policies(user["id"])
+        policies = "\n".join(get_policies(user["id"]))
         entities = generate_cedar_entities()
-        request = generate_cedar_request(p, event, user)
+        request = generate_cedar_request(event, user)
         print(f"policies = {policies}")
         print(f"entities = {entities}")
         print(f"request = {request}")

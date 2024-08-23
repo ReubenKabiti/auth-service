@@ -6,10 +6,24 @@ PolicyAssignmentsTable:
     AttributeDefinitions:
       - AttributeName: id
         AttributeType: S
+      - AttributeName: entityId
+        AttributeType: S
+      - AttributeName: entityType
+        AttributeType: S
 
     KeySchema:
       - AttributeName: id
         KeyType: HASH
+    GlobalSecondaryIndexes:
+      - IndexName: entityIdEntityTypeIndex
+        KeySchema:
+          - AttributeName: entityId
+            KeyType: HASH
+          - AttributeName: entityType
+            KeyType: RANGE
+        Projection:
+          ProjectionType: ALL
+
 
 PolicyAssignmentsTableIAM:
   Effect: Allow
@@ -17,3 +31,4 @@ PolicyAssignmentsTableIAM:
     - dynamodb:*
   Resource: 
     - ${self:custom.PolicyAssignmentsTable.Arn}
+    - !Join ['/', ['${self:custom.PolicyAssignmentsTable.Arn}', 'index', 'entityIdEntityTypeIndex']]
