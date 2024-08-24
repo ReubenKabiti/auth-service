@@ -36,7 +36,7 @@ def get_user_policies(user_id):
         permissions = []
         for role in roles:
             role_permissions = roles_permissions_table.query(
-                IndexName="roleId",
+                IndexName="roleIdIndex",
                 KeyConditionExpression=boto3.dynamodb.conditions.Key("roleId").eq(role)
             ).get("Items", [])
             for role_permission in role_permissions:
