@@ -26,4 +26,4 @@ UsersRolesTableIAM:
     - dynamodb:*
   Resource: 
     - ${self:custom.UsersRolesTable.Arn}
-    - !Join ['/', ['${self:custom.UsersRolesTable.Arn}', 'index', 'userIdIndex']]
+    - !Join ['/', ['${self:custom.UsersRolesTable.Arn}', 'index', '*']]

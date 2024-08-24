@@ -31,4 +31,4 @@ PolicyAssignmentsTableIAM:
     - dynamodb:*
   Resource: 
     - ${self:custom.PolicyAssignmentsTable.Arn}
-    - !Join ['/', ['${self:custom.PolicyAssignmentsTable.Arn}', 'index', 'entityIdEntityTypeIndex']]
+    - !Join ['/', ['${self:custom.PolicyAssignmentsTable.Arn}', 'index', '*']]

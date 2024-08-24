@@ -28,3 +28,4 @@ RolesPermissionsTableIAM:
     - dynamodb:*
   Resource: 
     - ${self:custom.RolesPermissionsTable.Arn}
+    - !Join ['/', ['${self:custom.RolesPermissionsTable.Arn}', 'index', '*']]

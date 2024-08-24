@@ -28,4 +28,4 @@ UsersTableIAM:
     - dynamodb:*
   Resource: 
     - ${self:custom.UsersTable.Arn}
-    - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', 'emailIndex']]
+    - !Join ['/', ['${self:custom.UsersTable.Arn}', 'index', '*']]
