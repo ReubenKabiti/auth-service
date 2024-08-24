@@ -20,6 +20,7 @@ def get_user_policies(user_id):
         )
 
         items = response.get("Items", [])
+        print(f"assignments = {items}")
         for item in items:
             policies.append(item.get("policyId"))
 
@@ -62,5 +63,6 @@ def get_user_policies(user_id):
         item = policy.get("Item", {"policy_definition": ""})
         policy = item.get("policy_definition", "")
         policy_defs.append(policy)
+    print(f"policy defs = {policy_defs}")
     return policy_defs
 

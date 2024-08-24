@@ -9,15 +9,17 @@ from .lib.get_user_policies import get_user_policies
 from cedarpy import is_authorized, Decision
 
 def extract_resources_from_policy(policies):
-    resource_pattern = r'(resource)\s==\sApi::"([0-9a-zA-Z_\-/]+)"'
-    matches = re.findall(resource_pattern, policies)
+    resource_pattern = r'(resource)\s==\sApi::"([0-9a-zA-Z_\-/\*]+)"'
     regex_resource = {}
     slug_pattern = r"[0-9a-zA-Z\-]+"
-    for match in matches:
-        _, resource = match
-        regex = resource.replace("*", slug_pattern)
-        regex = f"{regex}/?"
-        regex_resource[regex] = resource
+
+    for policy in policies:
+        matches = re.findall(resource_pattern, policy)
+        for match in matches:
+            _, resource = match
+            regex = resource.replace("*", slug_pattern)
+            regex = f"{regex}/?"
+            regex_resource[regex] = resource
     return regex_resource
 
 
@@ -88,13 +90,11 @@ def handler(event, context):
         if user is None:
            return json.loads(generate_policy("user", "Deny", event["methodArn"]))
 
-        policies = "\n".join(get_policies(user["id"]))
+        policies = get_policies(user["id"])
         entities = generate_cedar_entities()
         method, resource_raw = extract_method_and_resource(event)
         resource = match_request(policies, resource_raw)
-
-        if resource is None:
-           return json.loads(generate_policy("user", "Deny", event["methodArn"]))
+        policies = "\n".join(policies)
 
         request = generate_cedar_request(user, method, resource)
 
@@ -102,11 +102,14 @@ def handler(event, context):
         print(f"entities = {entities}")
         print(f"request = {request}")
 
+        if resource is None:
+           return json.loads(generate_policy("user", "Deny", event["methodArn"]))
+
         decision = evalute_cedar(policies, entities, request)
 
         print(f"decision = {decision}")
-        # if decision:
-        if True: # ignore policies for now
+        if decision:
+        # if True: # ignore policies for now
             return json.loads(generate_policy(user["id"], "Allow", event["methodArn"], context=user))
         return json.loads(generate_policy("user", "Deny", event["methodArn"]))
     except Exception as e:

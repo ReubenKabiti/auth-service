@@ -41,7 +41,7 @@ functions:
     handler: src/handlers/protected.handler
     events:
       - http:
-          path: /receipts/update
+          path: /customers/{id}
           method: get
           cors: true
           authorizer: auth
