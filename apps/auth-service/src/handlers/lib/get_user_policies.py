@@ -11,7 +11,7 @@ def get_user_policies(user_id):
         # check in the policy assignments table
         response = table.query(
             IndexName="GSI1",
-            KeyConditionExpression=Key("GSI1").eq(user_id) & Key("sk").begins_with("POLASSIGN#")
+            KeyConditionExpression=Key("GSI1").eq(user_id) & Key("pk").begins_with("POLASSIGN#")
         )
 
         items = response.get("Items", [])
@@ -41,8 +41,7 @@ def get_user_policies(user_id):
         for perm in permissions:
             perm_policies = table.query(
                 IndexName="GSI1",
-                KeyConditionExpression=boto3.dynamodb.conditions.Key("GSI1").eq(perm) &
-                                       boto3.dynamodb.conditions.Key("pk").begins_with("PERMSPOLS#")
+                KeyConditionExpression=Key("GSI1").eq(perm) & Key("pk").begins_with("POLASSIGN#")
             ).get("Items", [])
             for p in perm_policies:
                 policies.append(p.get("policyId"))
@@ -51,7 +50,7 @@ def get_user_policies(user_id):
     except Exception as e:
         print(e)
 
-    # finally, after everything is done, get the policy defitions
+    # finally, after everything is done, get the policy definitions
     policy_defs = []
     for policy_id in policies:
         policy = table.get_item(Key={"pk": policy_id.strip()})
