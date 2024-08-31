@@ -3,8 +3,7 @@ from uuid import uuid4 as uuid
 from passlib.hash import pbkdf2_sha256
 import json
 import os
-
-table = boto3.resource("dynamodb").Table(os.environ.get("UsersTableName"))
+from .lib.table import table
 
 def handler(event, context):
     body = json.loads(event.get("body"))
@@ -16,17 +15,17 @@ def handler(event, context):
     password = body.get("password")
 
     hashed_pw = pbkdf2_sha256.hash(password)
-    
+
     item = {
-        "id": str(uuid()),
+        "pk": f"USER#{str(uuid())}",
+        "GSI1": email,
         "username": username,
         "fullname": fullname,
-        "email": email,
         "password": hashed_pw,
     }
 
     table.put_item(Item=item)
     return {
         "statusCode": 201,
-        "body": json.dumps({"id": item["id"]}),
+        "body": json.dumps({"pk": item["pk"]}),
     }

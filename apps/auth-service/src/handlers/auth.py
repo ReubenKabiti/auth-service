@@ -63,7 +63,7 @@ def generate_cedar_entities():
 
 def generate_cedar_request(user, method, resource):
 
-    p = f"User::\"{user['id']}\""
+    p = f"User::\"{user['pk']}\""
     a = f"Action::\"{method}\""
     r = f"Api::\"{resource}\""
 
@@ -90,7 +90,7 @@ def handler(event, context):
         if user is None:
            return json.loads(generate_policy("user", "Deny", event["methodArn"]))
 
-        policies = get_policies(user["id"])
+        policies = get_policies(user["pk"])
         entities = generate_cedar_entities()
         method, resource_raw = extract_method_and_resource(event)
         resource = match_request(policies, resource_raw)
@@ -110,7 +110,7 @@ def handler(event, context):
         print(f"decision = {decision}")
         if decision:
         # if True: # ignore policies for now
-            return json.loads(generate_policy(user["id"], "Allow", event["methodArn"], context=user))
+            return json.loads(generate_policy(user["pk"], "Allow", event["methodArn"], context=user))
         return json.loads(generate_policy("user", "Deny", event["methodArn"]))
     except Exception as e:
         print(e)
