@@ -1,4 +1,8 @@
 service: auth-service
+package:
+  exclude:
+    - python/**
+    - python.layer.zip
 
 frameworkVersion: '3'
 
@@ -17,6 +21,7 @@ provider:
 
   environment:
     TableName: ${self:custom.Table.Name}
+
 
 functions:
   auth:
@@ -99,15 +104,15 @@ resources:
         KeySchema:
           - AttributeName: pk
             KeyType: HASH
-        # GlobalSecondaryIndexes:
-        #   - IndexName: GSI1
-        #     KeySchema:
-        #       - AttributeName: pk
-        #         KeyType: HASH
-        #       - AttributeName: GSI1
-        #         KeyType: RANGE
-        #     Projection:
-        #       ProjectionType: ALL
+        GlobalSecondaryIndexes:
+          - IndexName: GSI1
+            KeySchema:
+              - AttributeName: GSI1
+                KeyType: HASH
+              - AttributeName: pk
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
 
 custom:
   Table:

@@ -17,7 +17,7 @@ def handler(event, context):
 
     res = table.query(
         IndexName="GSI1",
-        KeyConditionExpression=Key("pk").begins_with("User#") & Key("GSI1").eq(email)
+        KeyConditionExpression=Key("pk").begins_with("USER#") & Key("GSI1").eq(email)
     )
 
     if not "Items" in res:
@@ -26,7 +26,15 @@ def handler(event, context):
             "body": json.dumps({"message":  error_msg}),
         }
 
-    user = res.get("Items")[0]
+    user_items = res.get("Items")
+
+    if len(user_items) == 0:
+        return {
+            "statusCode": 400,
+            "body": json.dumps({"message":  error_msg}),
+        }
+
+    user = user_items[0]
 
     if not pbkdf2_sha256.verify(password, user["password"]):
         return {
