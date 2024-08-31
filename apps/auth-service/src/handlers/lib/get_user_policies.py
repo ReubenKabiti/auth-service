@@ -1,6 +1,7 @@
 import boto3
 import os
 import re
+from boto3.dynamodb.conditions import Key
 
 from .table import table
 
@@ -10,7 +11,7 @@ def get_user_policies(user_id):
         # check in the policy assignments table
         response = table.query(
             IndexName="GSI1",
-            KeyConditionExpression=boto3.dynamodb.conditions.Key("GSI1").eq(user_id)
+            KeyConditionExpression=Key("GSI1").eq(user_id) & Key("sk").begins_with("POLASSIGN#")
         )
 
         items = response.get("Items", [])
@@ -19,9 +20,9 @@ def get_user_policies(user_id):
             policies.append(item.get("policyId"))
 
         # get all the user's roles
-        users_roles = users_roles_table.query(
-            IndexName="userIdIndex",
-            KeyConditionExpression=boto3.dynamodb.conditions.Key("userId").eq(user_id)
+        users_roles = table.query(
+            IndexName="GSI1",
+            KeyConditionExpression=Key("GSI1").eq(user_id) & Key("pk").begins_with("USERSROLES#")
         ).get("Items", [])
 
         roles = [i.get("roleId") for i in users_roles]
@@ -29,19 +30,19 @@ def get_user_policies(user_id):
         # get all the role's permissions
         permissions = []
         for role in roles:
-            role_permissions = roles_permissions_table.query(
-                IndexName="roleIdIndex",
-                KeyConditionExpression=boto3.dynamodb.conditions.Key("roleId").eq(role)
+            role_permissions = table.query(
+                IndexName="GSI1",
+                KeyConditionExpression=Key("GSI1").eq(role) & Key("pk").begins_with("ROLESPERMS#")
             ).get("Items", [])
             for role_permission in role_permissions:
                 permissions.append(role_permission.get("permissionId"))
 
         # finally, get all the policies that are linked to the permissons
         for perm in permissions:
-            perm_policies = policy_assignments_table.query(
-                IndexName="entityIdEntityTypeIndex",
-                KeyConditionExpression=boto3.dynamodb.conditions.Key("entityId").eq(perm) &
-                                       boto3.dynamodb.conditions.Key("entityType").eq("Permission")
+            perm_policies = table.query(
+                IndexName="GSI1",
+                KeyConditionExpression=boto3.dynamodb.conditions.Key("GSI1").eq(perm) &
+                                       boto3.dynamodb.conditions.Key("pk").begins_with("PERMSPOLS#")
             ).get("Items", [])
             for p in perm_policies:
                 policies.append(p.get("policyId"))
@@ -53,7 +54,7 @@ def get_user_policies(user_id):
     # finally, after everything is done, get the policy defitions
     policy_defs = []
     for policy_id in policies:
-        policy = policies_table.get_item(Key={"id": policy_id.strip()})
+        policy = table.get_item(Key={"pk": policy_id.strip()})
         item = policy.get("Item", {"policy_definition": ""})
         policy = item.get("policy_definition", "")
         policy_defs.append(policy)
