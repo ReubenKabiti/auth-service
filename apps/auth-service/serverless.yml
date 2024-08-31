@@ -6,6 +6,7 @@ provider:
   name: aws
   runtime: python3.10
   region: eu-central-1
+  stage: dev
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -88,7 +89,7 @@ resources:
     Table:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: Table
+        TableName: ${self:service}-table-${self:provider.stage}
         BillingMode: PAY_PER_REQUEST
         AttributeDefinitions:
           - AttributeName: pk
@@ -98,13 +99,15 @@ resources:
         KeySchema:
           - AttributeName: pk
             KeyType: HASH
-        GlobalSecondaryIndexes:
-          - IndexName: GSI1
-            KeySchema:
-              - AttributeName: GSI1
-                KeyType: HASH
-            Projection:
-              ProjectionType: ALL
+        # GlobalSecondaryIndexes:
+        #   - IndexName: GSI1
+        #     KeySchema:
+        #       - AttributeName: pk
+        #         KeyType: HASH
+        #       - AttributeName: GSI1
+        #         KeyType: RANGE
+        #     Projection:
+        #       ProjectionType: ALL
 
 custom:
   Table:

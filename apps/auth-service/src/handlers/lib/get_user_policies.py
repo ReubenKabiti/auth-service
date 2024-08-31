@@ -2,21 +2,15 @@ import boto3
 import os
 import re
 
-db = boto3.resource("dynamodb")
-policy_assignments_table = db.Table(os.environ["PolicyAssignmentsTableName"])
-users_table = db.Table(os.environ["UsersTableName"])
-users_roles_table = db.Table(os.environ["UsersRolesTableName"])
-roles_permissions_table = db.Table(os.environ["RolesPermissionsTableName"])
-policies_table = db.Table(os.environ["PoliciesTableName"])
+from .table import table
 
 def get_user_policies(user_id):
     policies = []
     try:
         # check in the policy assignments table
-        response = policy_assignments_table.query(
-            IndexName="entityIdEntityTypeIndex",
-            KeyConditionExpression=boto3.dynamodb.conditions.Key("entityId").eq(user_id) &
-                                   boto3.dynamodb.conditions.Key("entityType").eq("User")
+        response = table.query(
+            IndexName="GSI1",
+            KeyConditionExpression=boto3.dynamodb.conditions.Key("GSI1").eq(user_id)
         )
 
         items = response.get("Items", [])

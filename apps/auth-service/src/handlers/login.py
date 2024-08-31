@@ -4,8 +4,9 @@ import json
 from passlib.hash import pbkdf2_sha256
 import datetime
 import os
+from boto3.dynamodb.conditions import Key
+from .lib.table import table
 
-table = boto3.resource("dynamodb").Table(os.environ.get("UsersTableName"))
 
 def handler(event, context):
     body = json.loads(event.get("body"))
@@ -15,8 +16,8 @@ def handler(event, context):
     error_msg = "Incorrect email or password"
 
     res = table.query(
-        IndexName="emailIndex",
-        KeyConditionExpression=boto3.dynamodb.conditions.Key("email").eq(email)
+        IndexName="GSI1",
+        KeyConditionExpression=Key("pk").begins_with("User#") & Key("GSI1").eq(email)
     )
 
     if not "Items" in res:
@@ -35,7 +36,7 @@ def handler(event, context):
 
     exp = datetime.datetime.now() + datetime.timedelta(3600*24*3) # jwt token expires after 3 days
 
-    claims = { "id": user.get("id"), "username": user.get("username"), "email": email, "exp": exp}
+    claims = { "pk": user.get("pk"), "username": user.get("username"), "email": email, "exp": exp}
     token = jwt.encode(claims, "author")
 
     return {
