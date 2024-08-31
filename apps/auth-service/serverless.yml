@@ -5,24 +5,17 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: python3.10
-  region: "eu-north-1"
+  region: eu-central-1
   iamRoleStatements:
-    - ${file(resources/UsersTable.yml):UsersTableIAM}
-    - ${file(resources/RolesTable.yml):RolesTableIAM}
-    - ${file(resources/PermissionsTable.yml):PermissionsTableIAM}
-    - ${file(resources/PoliciesTable.yml):PoliciesTableIAM}
-    - ${file(resources/PolicyAssignmentsTable.yml):PolicyAssignmentsTableIAM}
-    - ${file(resources/RolesPermissionsTable.yml):RolesPermissionsTableIAM}
-    - ${file(resources/UsersRolesTable.yml):UsersRolesTableIAM}
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - ${self:custom.Table.Arn}
+        - !Join ['/', ['${self:custom.Table.Arn}', 'index', '*']]
 
   environment:
-    UsersTableName: ${self:custom.UsersTable.Name}
-    RolesTableName: ${self:custom.RolesTable.Name}
-    PermissionsTableName: ${self:custom.PermissionsTable.Name}
-    PoliciesTableName: ${self:custom.PoliciesTable.Name}
-    PolicyAssignmentsTableName: ${self:custom.PolicyAssignmentsTable.Name}
-    RolesPermissionsTableName: ${self:custom.RolesPermissionsTable.Name}
-    UsersRolesTableName: ${self:custom.UsersRolesTable.Name}
+    TableName: ${self:custom.Table.Name}
 
 functions:
   auth:
@@ -91,41 +84,31 @@ resources:
         RestApiId:
           Ref: 'ApiGatewayRestApi'
         StatusCode: '401'
-          
-    UsersTable: ${file(resources/UsersTable.yml):UsersTable}
-    RolesTable: ${file(resources/RolesTable.yml):RolesTable}
-    PermissionsTable: ${file(resources/PermissionsTable.yml):PermissionsTable}
-    PoliciesTable: ${file(resources/PoliciesTable.yml):PoliciesTable}
-    PolicyAssignmentsTable: ${file(resources/PolicyAssignmentsTable.yml):PolicyAssignmentsTable}
-    RolesPermissionsTable: ${file(resources/RolesPermissionsTable.yml):RolesPermissionsTable}
-    UsersRolesTable: ${file(resources/UsersRolesTable.yml):UsersRolesTable}
 
-    MyBucket:
-      Type: AWS::S3::Bucket
+    Table:
+      Type: AWS::DynamoDB::Table
       Properties:
-        BucketName: my-bucket-1fc71d36
+        TableName: Table
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: pk
+            AttributeType: S
+          - AttributeName: GSI1
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pk
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: GSI1
+            KeySchema:
+              - AttributeName: GSI1
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
 
 custom:
-  UsersTable:
-    Arn: !GetAtt UsersTable.Arn
-    Name: !Ref UsersTable
-  RolesTable:
-    Arn: !GetAtt RolesTable.Arn
-    Name: !Ref RolesTable
-  PermissionsTable:
-    Arn: !GetAtt PermissionsTable.Arn
-    Name: !Ref PermissionsTable
-  PoliciesTable:
-    Arn: !GetAtt PoliciesTable.Arn
-    Name: !Ref PoliciesTable
-  PolicyAssignmentsTable:
-    Arn: !GetAtt PolicyAssignmentsTable.Arn
-    Name: !Ref PolicyAssignmentsTable
-  RolesPermissionsTable:
-    Arn: !GetAtt RolesPermissionsTable.Arn
-    Name: !Ref RolesPermissionsTable
-  UsersRolesTable:
-    Arn: !GetAtt UsersRolesTable.Arn
-    Name: !Ref UsersRolesTable
+  Table:
+    Arn: !GetAtt Table.Arn
+    Name: !Ref Table
   apiGatewayCaching:
     enabled: false
