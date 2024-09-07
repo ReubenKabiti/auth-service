@@ -1,10 +1,10 @@
 service: auth-service
-package:
-  exclude:
-    - python/**
-    - python.layer.zip
 
 frameworkVersion: '3'
+
+package:
+  exclude:
+    - layers/**
 
 provider:
   name: aws
@@ -21,7 +21,14 @@ provider:
 
   environment:
     TableName: ${self:custom.Table.Name}
+  
+  layers:
+    - !Ref DepsLambdaLayer
 
+layers:
+  deps:
+    path: ./layers 
+    name: ${self:provider.stage}-deps # optional, Deployed Lambda layer name
 
 functions:
   auth:
@@ -64,7 +71,7 @@ functions:
 
 
 plugins:
-  - serverless-python-requirements
+  # - serverless-python-requirements
   - serverless-api-gateway-caching
 
 

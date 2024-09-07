@@ -5,7 +5,7 @@ import re
 import os
 
 from .lib.get_user_policies import get_user_policies
-
+import cedarpy
 from cedarpy import is_authorized, Decision
 
 def extract_resources_from_policy(policies):

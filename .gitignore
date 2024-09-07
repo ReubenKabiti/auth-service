@@ -5,6 +5,7 @@ __pycache__/
 *$py.class
 python/
 *.layer.zip
+layers/
 
 # C extensions
 *.so
